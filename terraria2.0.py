@@ -143,6 +143,8 @@ class Player():
             if pygame.sprite.spritecollide(self,BALAnda_GROuB,False):
                 GAme_oVer = -1
                 GAme_oVer_fx.play()
+            if pygame.sprite.spritecollide(self,exit_Groub,False):
+                GAme_oVer = 1
             self.rect.x += dx
             self.rect.y += dy
                 
@@ -151,7 +153,7 @@ class Player():
             if self.rect.y > 200:
                 self.rect.y -=5
         screen.blit(self.image,self.rect)     
-        pygame.draw.rect(screen,(255,255,255),self.rect,2)
+        #pygame.draw.rect(screen,(255,255,255),self.rect,2)
         return GAme_oVer
 class Exit(pygame.sprite.Sprite):
     def __init__(self,x,y):
@@ -185,6 +187,19 @@ class LAVAnda(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
+
+def reset_level(level):
+    player.reset(100,screen_height-130)        
+    enemy_GROuB.empty()
+    BALAnda_GROuB.empty()
+    exit_Groub.empty()
+    
+    if path.exists(f"level{level}_data"):
+        pickle_in = open(f"level{level}_data","rb")
+        world_data = pickle.load(pickle_in)
+    world = World(world_data)
+    
+    return world    
         
 class Button():
     def __init__(self,x,y, image ):
@@ -218,11 +233,27 @@ jump_fx = pygame.mixer.Sound("3f00da9bdf24c19.mp3")
 jump_fx.set_volume(0.5)
 GAme_oVer_fx = pygame.mixer.Sound("680efe34665ab92.mp3")
 GAme_oVer_fx.set_volume(0.5)           
-            
-            
-            
-            
-            
+
+class platform(pygame.sprite.Sprite):
+    def __init__(self,x,y, move_x , move_y ):
+        pygame.sprite.Sprite.__init__(self)
+        img = pygame.image.load("pixil-frame-0 (23).png")
+        self.image = pygame.transform.scale(img,(tile_size,tile_size // 2 ))
+        self.rect.x = x
+        self.rect.y = y
+        self.move_counter= 0
+        self.move_direction  = 1 
+        self.move_x = move_x
+        self.move_y = move_y
+        
+        
+    def update(self):
+        self.rect.x += self.move_direction * self.move_x
+        self.rect.y += self.move_direction * self.move_y
+        self.move_counter +=1
+        if abs(self.move_counter)> 50:
+            self.move_direction *= -1
+            self.move_counter *= -1
             
             
             
@@ -473,16 +504,22 @@ world_data = [
 [1,1,1,1,1,1,1,1,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,1,1,1,1,1,1,1,1,1],
 [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
 ]
+level = 1
+max_level = 9
 enemy_GROuB = pygame.sprite.Group()
 BALAnda_GROuB = pygame.sprite.Group()
 exit_Groub = pygame.sprite.Group()
-world = World (world_data)
+#world = World (world_data)
 player = Player(50,screen_height-100)  
 clock = pygame.time.Clock()
 restart_button = Button(screen_width//2-75,screen_height//2,restart_image)
 start_button = Button(screen_width//2-350,screen_height//2,start_img)
 exit_button = Button(screen_width//2+150,screen_height//2,exit_img)
 run = True
+if path.exists(f"level{level}_data"):
+    pickle_in = open(f"level{level}_data","rb")
+    world_data = pickle.load(pickle_in)
+world = World(world_data)
 while run:
     clock.tick(40)
     screen.blit(bg_image,(0,0))
@@ -502,9 +539,23 @@ while run:
         GAme_oVer = player.update(GAme_oVer)
         if GAme_oVer == -1:
             if restart_button.draw():
-                player.reset(50,screen_height-100)
+                world_data = []
+                level = 1
+                world = reset_level(level)
                 GAme_oVer = 0
 #       draw_grid()
+        if GAme_oVer == 1:
+            level+=1
+            if level <=max_level:
+                world_data=[]
+                world =reset_level(level)
+                GAme_oVer = 0
+            else :
+                if restart_button.draw():
+                    level=1
+                    world_data = []
+                    world =reset_level(level)
+                    GAme_oVer = 0
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False

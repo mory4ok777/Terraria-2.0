@@ -32,6 +32,15 @@ exit_img =pygame.Surface((tile_size,int(tile_size*1.5)))#
 exit_img.fill((255,0,0))
 save_img = pygame.image.load('save_btn.png')
 load_img = pygame.image.load('load_btn.png')
+vodavERh = pygame.image.load("pixil-frame-0 (8).png")
+vadaNis =  pygame.image.load("pixil-frame-0 (9).png")
+pesok =  pygame.image.load("pixil-frame-0 (6).png")
+oblothkopltfrm =  pygame.image.load("pixil-frame-0 (23).png")
+oblothkopltfrmlp =  pygame.image.load("pixil-frame-0 (24).png")
+mezduvodje = pygame.image.load("vodaseredina.png")
+podzemelje = pygame.image.load("zemly.png")
+pesok_s = pygame.image.load("pesoknis.png")
+
 
 # Глобальні змінні
 clicked = False
@@ -72,6 +81,22 @@ def draw_world():
                     img = pygame.transform.scale(grass_img, (tile_size, tile_size))
                 if world_data[row][col] == 2:
                     img = pygame.transform.scale(oblothko_img, (tile_size, tile_size))
+                if world_data[row][col] == 6:
+                    img = pygame.transform.scale(vodavERh, (tile_size, tile_size))
+                if world_data[row][col] == 7:
+                    img = pygame.transform.scale(vadaNis, (tile_size, tile_size))
+                if world_data[row][col] == 8:
+                    img = pygame.transform.scale(pesok, (tile_size, tile_size))
+                if world_data[row][col] == 9:
+                    img = pygame.transform.scale(mezduvodje, (tile_size, tile_size))                
+                if world_data[row][col] == 10:
+                    img = pygame.transform.scale(podzemelje, (tile_size, tile_size))
+                if world_data[row][col] == 11:
+                    img = pygame.transform.scale(pesok_s, (tile_size, tile_size))    
+                if world_data[row][col] == 12:
+                    img = pygame.transform.scale(oblothkopltfrm, (tile_size, tile_size))    
+                if world_data[row][col] == 13:
+                    img = pygame.transform.scale(oblothkopltfrmlp, (tile_size, tile_size))     
                 elif world_data[row][col] == 3:
                     img = pygame.transform.scale(blob_img, (tile_size, int(tile_size * 0.75)))
                     screen.blit(img, (col * tile_size, row * tile_size + (tile_size * 0.25)))
