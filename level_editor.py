@@ -35,7 +35,7 @@ load_img = pygame.image.load('load_btn.png')
 vodavERh = pygame.image.load("pixil-frame-0 (8).png")
 vadaNis =  pygame.image.load("pixil-frame-0 (9).png")
 pesok =  pygame.image.load("pixil-frame-0 (6).png")
-oblothkopltfrm =  pygame.image.load("pixil-frame-0 (23).png")
+oblothkopltfrm =  pygame.image.load("pixil-frame-0 (25).png")
 oblothkopltfrmlp =  pygame.image.load("pixil-frame-0 (24).png")
 mezduvodje = pygame.image.load("vodaseredina.png")
 podzemelje = pygame.image.load("zemly.png")
@@ -79,32 +79,20 @@ def draw_world():
                 img = None
                 if world_data[row][col] == 1:
                     img = pygame.transform.scale(grass_img, (tile_size, tile_size))
-                if world_data[row][col] == 2:
-                    img = pygame.transform.scale(oblothko_img, (tile_size, tile_size))
-                if world_data[row][col] == 6:
-                    img = pygame.transform.scale(vodavERh, (tile_size, tile_size))
-                if world_data[row][col] == 7:
-                    img = pygame.transform.scale(vadaNis, (tile_size, tile_size))
-                if world_data[row][col] == 8:
-                    img = pygame.transform.scale(pesok, (tile_size, tile_size))
-                if world_data[row][col] == 9:
-                    img = pygame.transform.scale(mezduvodje, (tile_size, tile_size))                
-                if world_data[row][col] == 10:
-                    img = pygame.transform.scale(podzemelje, (tile_size, tile_size))
-                if world_data[row][col] == 11:
-                    img = pygame.transform.scale(pesok_s, (tile_size, tile_size))    
-                if world_data[row][col] == 12:
-                    img = pygame.transform.scale(oblothkopltfrm, (tile_size, tile_size))    
-                if world_data[row][col] == 13:
-                    img = pygame.transform.scale(oblothkopltfrmlp, (tile_size, tile_size))     
+                    screen.blit(img, (col * tile_size, row * tile_size))
+                elif world_data[row][col] == 2:
+                    img = pygame.transform.scale(oblothko_img, (tile_size, tile_size))   
+                    screen.blit(img, (col * tile_size, row * tile_size))
                 elif world_data[row][col] == 3:
                     img = pygame.transform.scale(blob_img, (tile_size, int(tile_size * 0.75)))
                     screen.blit(img, (col * tile_size, row * tile_size + (tile_size * 0.25)))
                     continue
-                # elif world_data[row][col] == 4:
-                #     img = pygame.transform.scale(platform_x_img, (tile_size, tile_size // 2))
-                # elif world_data[row][col] == 5:
-                #     img = pygame.transform.scale(platform_y_img, (tile_size, tile_size // 2))
+                elif world_data[row][col] == 12:
+                     img = pygame.transform.scale(oblothkopltfrm, (tile_size, tile_size // 2))
+                     screen.blit(img, (col * tile_size, row * tile_size))
+                elif world_data[row][col] == 13:
+                     img = pygame.transform.scale(oblothkopltfrmlp, (tile_size, tile_size // 2))
+                     screen.blit(img, (col * tile_size, row * tile_size))
                 elif world_data[row][col] == 4:
                     img = pygame.transform.scale(lava_img, (tile_size, tile_size // 2))
                     screen.blit(img, (col * tile_size, row * tile_size + (tile_size // 2)))
@@ -117,7 +105,23 @@ def draw_world():
                     img = pygame.transform.scale(exit_img, (tile_size, int(tile_size * 1.5)))
                     screen.blit(img, (col * tile_size, row * tile_size - (tile_size // 2)))
                     continue
-                if img:
+                elif world_data[row][col] == 6:
+                    img = pygame.transform.scale(vodavERh, (tile_size, tile_size))
+                    screen.blit(img, (col * tile_size, row * tile_size))
+                elif world_data[row][col] == 7:
+                    img = pygame.transform.scale(vadaNis, (tile_size, tile_size))
+                    screen.blit(img, (col * tile_size, row * tile_size))
+                elif world_data[row][col] == 8:
+                    img = pygame.transform.scale(pesok, (tile_size, tile_size))
+                    screen.blit(img, (col * tile_size, row * tile_size))
+                elif world_data[row][col] == 9:
+                    img = pygame.transform.scale(mezduvodje, (tile_size, tile_size))    
+                    screen.blit(img, (col * tile_size, row * tile_size))            
+                elif world_data[row][col] == 10:
+                    img = pygame.transform.scale(podzemelje, (tile_size, tile_size))
+                    screen.blit(img, (col * tile_size, row * tile_size))
+                elif world_data[row][col] == 11:
+                    img = pygame.transform.scale(pesok_s, (tile_size, tile_size))    
                     screen.blit(img, (col * tile_size, row * tile_size))
 
 # Клас кнопки
@@ -176,9 +180,9 @@ while run:
             x, y = pos[0] // tile_size, pos[1] // tile_size
             if x < cols and y < cols:
                 if pygame.mouse.get_pressed()[0]:
-                    world_data[y][x] = (world_data[y][x] + 1) % 9
+                    world_data[y][x] = (world_data[y][x] + 1) % 15
                 elif pygame.mouse.get_pressed()[2]:
-                    world_data[y][x] = (world_data[y][x] - 1) % 9
+                    world_data[y][x] = (world_data[y][x] - 1) % 15
         if event.type == pygame.MOUSEBUTTONUP:
             clicked = False
         if event.type == pygame.KEYDOWN:

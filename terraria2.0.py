@@ -16,6 +16,14 @@ restart_image = pygame.image.load("restart_btn.png")
 start_img = pygame.image.load("start_btn.png")
 exit_img = pygame.image.load("exit_btn.png")
 bg_image = pygame.image.load("OIP (4).png")
+vodavERh = pygame.image.load("pixil-frame-0 (8).png")
+vadaNis =  pygame.image.load("pixil-frame-0 (9).png")
+pesok =  pygame.image.load("pixil-frame-0 (6).png")
+oblothkopltfrm =  pygame.image.load("pixil-frame-0 (23).png")
+oblothkopltfrmlp =  pygame.image.load("pixil-frame-0 (24).png")
+mezduvodje = pygame.image.load("vodaseredina.png")
+podzemelje = pygame.image.load("zemly.png")
+pesok_s = pygame.image.load("pesoknis.png")
 bg_image = pygame.transform.scale(bg_image,(800,800))
 def draw_grid():
     for line in range(0, 40):
@@ -57,6 +65,57 @@ class World():
                 if tile == 5:
                     exit = Exit(col_count*tile_size,row_count*tile_size-(tile_size//2))
                     exit_Groub.add(exit)
+                if tile == 6:
+                    img = pygame.transform.scale(vodavERh,(tile_size, tile_size))
+                    img_rect = img.get_rect()
+                    img_rect.x = col_count * tile_size
+                    img_rect.y = row_count * tile_size
+                    tile =(img,img_rect)
+                    self.tile_list.append(tile)
+                if tile == 7:
+                    img = pygame.transform.scale(vadaNis,(tile_size, tile_size))
+                    img_rect = img.get_rect()
+                    img_rect.x = col_count * tile_size
+                    img_rect.y = row_count * tile_size
+                    tile =(img,img_rect)
+                    self.tile_list.append(tile)
+                if tile == 8:
+                    img = pygame.transform.scale(pesok,(tile_size, tile_size))
+                    img_rect = img.get_rect()
+                    img_rect.x = col_count * tile_size
+                    img_rect.y = row_count * tile_size
+                    tile =(img,img_rect)
+                    self.tile_list.append(tile)
+                if tile == 9:
+                    img = pygame.transform.scale(mezduvodje,(tile_size, tile_size))
+                    img_rect = img.get_rect()
+                    img_rect.x = col_count * tile_size
+                    img_rect.y = row_count * tile_size
+                    tile =(img,img_rect)
+                    self.tile_list.append(tile)
+                if tile == 10:
+                    img = pygame.transform.scale(podzemelje,(tile_size, tile_size))
+                    img_rect = img.get_rect()
+                    img_rect.x = col_count * tile_size
+                    img_rect.y = row_count * tile_size
+                    tile =(img,img_rect)
+                    self.tile_list.append(tile)
+                if tile == 11:
+                    img = pygame.transform.scale(pesok_s,(tile_size, tile_size))
+                    img_rect = img.get_rect()
+                    img_rect.x = col_count * tile_size
+                    img_rect.y = row_count * tile_size
+                    tile =(img,img_rect)
+                    self.tile_list.append(tile)
+                if tile == 12:
+                    platform = Platform(col_count*tile_size,row_count*tile_size,0,1)
+                    platform_Grup.add(platform)
+                if tile == 13:
+                    platform = Platform(col_count*tile_size,row_count*tile_size,1,0)
+                    platform_Grup.add(platform)
+                
+                
+                
                 col_count +=1
             row_count += 1
 
@@ -145,6 +204,23 @@ class Player():
                 GAme_oVer_fx.play()
             if pygame.sprite.spritecollide(self,exit_Groub,False):
                 GAme_oVer = 1
+           #for platform in platform
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
             self.rect.x += dx
             self.rect.y += dy
                 
@@ -234,11 +310,12 @@ jump_fx.set_volume(0.5)
 GAme_oVer_fx = pygame.mixer.Sound("680efe34665ab92.mp3")
 GAme_oVer_fx.set_volume(0.5)           
 
-class platform(pygame.sprite.Sprite):
+class Platform(pygame.sprite.Sprite):
     def __init__(self,x,y, move_x , move_y ):
         pygame.sprite.Sprite.__init__(self)
         img = pygame.image.load("pixil-frame-0 (23).png")
         self.image = pygame.transform.scale(img,(tile_size,tile_size // 2 ))
+        self.rect= self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
         self.move_counter= 0
@@ -509,6 +586,7 @@ max_level = 9
 enemy_GROuB = pygame.sprite.Group()
 BALAnda_GROuB = pygame.sprite.Group()
 exit_Groub = pygame.sprite.Group()
+platform_Grup = pygame.sprite.Group()
 #world = World (world_data)
 player = Player(50,screen_height-100)  
 clock = pygame.time.Clock()
@@ -533,9 +611,11 @@ while run:
         if GAme_oVer == 0:
             
             enemy_GROuB.update()
+            platform_Grup.update()
         enemy_GROuB.draw(screen )
         BALAnda_GROuB.draw(screen)
         exit_Groub.draw(screen)
+        platform_Grup.draw(screen)
         GAme_oVer = player.update(GAme_oVer)
         if GAme_oVer == -1:
             if restart_button.draw():
@@ -556,6 +636,7 @@ while run:
                     world_data = []
                     world =reset_level(level)
                     GAme_oVer = 0
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
