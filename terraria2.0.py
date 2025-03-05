@@ -15,7 +15,7 @@ tile_size = 25
 restart_image = pygame.image.load("restart_btn.png")
 start_img = pygame.image.load("start_btn.png")
 exit_img = pygame.image.load("exit_btn.png")
-bg_image = pygame.image.load("OIP (4).png")
+bg_image = pygame.image.load("Pica-enhance-20250216194236.png")
 vodavERh = pygame.image.load("pixil-frame-0 (8).png")
 vadaNis =  pygame.image.load("pixil-frame-0 (9).png")
 pesok =  pygame.image.load("pixil-frame-0 (6).png")
@@ -125,6 +125,8 @@ class World():
 class Player():
     def __init__(self,x,y):
         self.reset(x,y)
+        self.invisible= False
+        self.invisibletomer = 0
     def reset(self,x,y) :
         self.images_right = []
         self.images_left = []
@@ -146,14 +148,26 @@ class Player():
         self.vel_y = 0
         self.jumped = False
         self.direction = 0
-       
+        self.in_air = True
+        
     def update(self,GAme_oVer):
         dx = 0
         dy = 0
         wolk_kd = 10
+        global world 
+        global level
+        global lives 
+        
         key = pygame.key.get_pressed()
         if GAme_oVer == 0:
-            if key[pygame.K_b] and self.jumped == False:
+            if self.invisible:
+                self.invisible -=1
+                if self.invisibletomer <=0:
+                    self.invisible= False
+                
+                
+                
+            if key[pygame.K_b] and self.jumped == False and self.in_air == False:
                 jump_fx.play()
                 self.vel_y = -14
                 self.jumped = True
@@ -175,7 +189,8 @@ class Player():
                 if self.direction == 1:
                     self.image = self.images_right[self.index]
                 if self.direction == -1:
-                    self.image = self.images_left[self.index]            
+                    self.image = self.images_left[self.index]          
+
             self.vel_y +=1
             if self.vel_y > 10:
                 self.vel_y = 10 
@@ -185,7 +200,7 @@ class Player():
             
             
             
-            
+            self.in_air = True
             for tile in world.tile_list:
                 if tile [1].colliderect(self.rect.x + dx,self.rect.y ,self.width,self.height):
                     dx = 0
@@ -196,16 +211,39 @@ class Player():
                     elif self.vel_y >= 0:
                         dy = tile [1].top - self.rect.bottom
                         self.vel_y = 0 
-            if pygame.sprite.spritecollide(self,enemy_GROuB,False):
-                GAme_oVer = -1
-                GAme_oVer_fx.play()
-            if pygame.sprite.spritecollide(self,BALAnda_GROuB,False):
-                GAme_oVer = -1
-                GAme_oVer_fx.play()
+                        self.in_air = False
+            if pygame.sprite.spritecollide(self,enemy_GROuB,False )and not self.invisible:
+                lives -=1 
+                self.invisible = True
+                self.invisibletomer = 60
+                if lives == 0:
+                    GAme_oVer = -1
+                    GAme_oVer_fx.play()
+            if pygame.sprite.spritecollide(self,BALAnda_GROuB,False)and not self.invisible:
+                lives -=1 
+                self.invisible = True
+                self.invisibletomer = 60
+                if lives == 0:
+                    GAme_oVer = -1
+                    GAme_oVer_fx.play()
             if pygame.sprite.spritecollide(self,exit_Groub,False):
                 GAme_oVer = 1
            #for platform in platform
-            
+
+            for platform in platform_Grup:
+                if platform.rect.colliderect(self.rect.x +dx,self.rect.y , self.width,self.height):
+                    dx = 0
+                if platform.rect.colliderect(self.rect.x,self.rect.y +dy,self.width,self.height):
+                    if abs((self.rect.top + dy)-platform.rect.bottom)< 20:
+                        self.vel_y = 0
+                        dy = platform.rect.bottom -self.rect.top 
+                    elif abs((self.rect.bottom + dy)-platform.rect.top)< 20:
+                        self.rect.bottom = platform.rect.top -1
+                        self.in_air = False
+                        dy = 0
+                    if platform.move_x !=0:
+                        self.rect.x += platform.move_direction       
+                
             
             
             
@@ -269,6 +307,7 @@ def reset_level(level):
     enemy_GROuB.empty()
     BALAnda_GROuB.empty()
     exit_Groub.empty()
+    platform_Grup.empty()
     
     if path.exists(f"level{level}_data"):
         pickle_in = open(f"level{level}_data","rb")
@@ -332,6 +371,7 @@ class Platform(pygame.sprite.Sprite):
             self.move_direction *= -1
             self.move_counter *= -1
             
+
             
             
             
@@ -544,43 +584,13 @@ class Platform(pygame.sprite.Sprite):
             
             
             
-            
-            
-            
-world_data = [
-[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-[0,0,0,0,0,0,0,0,2,0,0,0,0,2,2,2,2,2,2,2,2,2,0,0,0,0,0,0,0,0,0,0],
-[0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,2,2,2,2,2,2,2,2,2,2,2,0,0,0,0,0],
-[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,2,2,2,2,0,0,0,0,0,0,0,0,0],
-[0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-[0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-[2,2,0,0,0,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0],
-[0,0,0,0,2,2,2,2,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0],
-[0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,2,2,0,0,0,0,0,0,0,0],
-[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-[0,0,0,0,0,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0],
-[2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-[0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,2,2,0,0,0,0,0,0,0],
-[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-[0,0,0,0,2,2,2,0,0,0,0,0,0,0,0,0,2,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0],
-[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-[0,0,0,0,0,0,0,0,0,2,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-[5,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-[5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0],
-[5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,5],
-[1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5],
-[1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,3,0,0,3,0,5],
-[1,1,1,1,1,1,1,1,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,1,1,1,1,1,1,1,1,1],
-[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
-]
+bglvl1 = pygame.image.load("OIP (4).png")    
+bgimages = {
+    1:pygame.transform.scale(bglvl1,(screen_width,screen_height))
+    
+    
+}      
+
 level = 1
 max_level = 9
 enemy_GROuB = pygame.sprite.Group()
@@ -588,7 +598,7 @@ BALAnda_GROuB = pygame.sprite.Group()
 exit_Groub = pygame.sprite.Group()
 platform_Grup = pygame.sprite.Group()
 #world = World (world_data)
-player = Player(50,screen_height-100)  
+player = Player(100,screen_height-130)  
 clock = pygame.time.Clock()
 restart_button = Button(screen_width//2-75,screen_height//2,restart_image)
 start_button = Button(screen_width//2-350,screen_height//2,start_img)
@@ -600,8 +610,10 @@ if path.exists(f"level{level}_data"):
 world = World(world_data)
 while run:
     clock.tick(40)
-    screen.blit(bg_image,(0,0))
+    curimage = bgimages.get(level,bg_image)
+    screen.blit(curimage,(0,0))
     if main_menu == True:
+        screen.blit(bg_image,(0,0))
         if exit_button.draw():
             run = False
         if start_button.draw():

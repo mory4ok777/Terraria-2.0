@@ -174,15 +174,19 @@ while run:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
-        if event.type == pygame.MOUSEBUTTONDOWN and not clicked:
-            clicked = True
+        if event.type == pygame.MOUSEWHEEL:
+     
             pos = pygame.mouse.get_pos()
             x, y = pos[0] // tile_size, pos[1] // tile_size
             if x < cols and y < cols:
-                if pygame.mouse.get_pressed()[0]:
-                    world_data[y][x] = (world_data[y][x] + 1) % 15
-                elif pygame.mouse.get_pressed()[2]:
-                    world_data[y][x] = (world_data[y][x] - 1) % 15
+                if event.y == 1:
+                    world_data[y][x] +=1
+                    if world_data[y][x]> 15:
+                        world_data[y][x] = 0
+                elif event.y == -1:
+                    world_data[y][x] -=1
+                    if world_data[y][x]<0:
+                        world_data[y][x] = 15
         if event.type == pygame.MOUSEBUTTONUP:
             clicked = False
         if event.type == pygame.KEYDOWN:
