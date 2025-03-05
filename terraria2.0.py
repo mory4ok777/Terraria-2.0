@@ -25,6 +25,10 @@ mezduvodje = pygame.image.load("vodaseredina.png")
 podzemelje = pygame.image.load("zemly.png")
 pesok_s = pygame.image.load("pesoknis.png")
 bg_image = pygame.transform.scale(bg_image,(800,800))
+GAme_oVer_Image = pygame.image.load("pixil-frame-0 (41).png")
+hart_full_image = pygame.image.load("fullhart.png")
+hart_kapput_image = pygame.image.load("kapputhart.png")
+lives = 5
 def draw_grid():
     for line in range(0, 40):
         pygame.draw.line(screen, (255, 255, 255), (0, line * tile_size), (screen_width, line * tile_size))
@@ -149,7 +153,6 @@ class Player():
         self.jumped = False
         self.direction = 0
         self.in_air = True
-        
     def update(self,GAme_oVer):
         dx = 0
         dy = 0
@@ -161,7 +164,7 @@ class Player():
         key = pygame.key.get_pressed()
         if GAme_oVer == 0:
             if self.invisible:
-                self.invisible -=1
+                self.invisibletomer -=1
                 if self.invisibletomer <=0:
                     self.invisible= False
                 
@@ -215,19 +218,32 @@ class Player():
             if pygame.sprite.spritecollide(self,enemy_GROuB,False )and not self.invisible:
                 lives -=1 
                 self.invisible = True
-                self.invisibletomer = 60
+                self.invisibletomer = 20
                 if lives == 0:
                     GAme_oVer = -1
                     GAme_oVer_fx.play()
             if pygame.sprite.spritecollide(self,BALAnda_GROuB,False)and not self.invisible:
                 lives -=1 
                 self.invisible = True
-                self.invisibletomer = 60
+                self.invisibletomer = 20
                 if lives == 0:
                     GAme_oVer = -1
                     GAme_oVer_fx.play()
-            if pygame.sprite.spritecollide(self,exit_Groub,False):
-                GAme_oVer = 1
+            for exit in exit_Groub:
+                if self.rect.colliderect(exit.rect):
+                    if exit.rect.x < screen_width //2:
+                        level-=1 
+                        if level < 1:
+                            level = 1
+                    else:
+                        level +=1
+                        if level > max_level:
+                            level = max_level
+                    world_data = []
+                    world = reset_level(level)
+                    GAme_oVer = 0
+                    break 
+                        
            #for platform in platform
 
             for platform in platform_Grup:
@@ -370,7 +386,6 @@ class Platform(pygame.sprite.Sprite):
         if abs(self.move_counter)> 50:
             self.move_direction *= -1
             self.move_counter *= -1
-            
 
             
             
@@ -583,15 +598,19 @@ class Platform(pygame.sprite.Sprite):
             
             
             
-            
-bglvl1 = pygame.image.load("OIP (4).png")    
+bglvl1 = pygame.image.load("OIP (4).png")
+bglvl2 = pygame.image.load("bglvl2.png")
 bgimages = {
-    1:pygame.transform.scale(bglvl1,(screen_width,screen_height))
-    
+    1:pygame.transform.scale(bglvl1,(screen_width,screen_height)),
+    2:pygame.transform.scale(bglvl2,(screen_width,screen_height))
     
 }      
 
-level = 1
+def draw_lives():
+    for i in range(lives):
+        screen.blit(hart_full_image,(10+i*(tile_size//2+5),50))
+
+level = 2
 max_level = 9
 enemy_GROuB = pygame.sprite.Group()
 BALAnda_GROuB = pygame.sprite.Group()
@@ -628,13 +647,23 @@ while run:
         BALAnda_GROuB.draw(screen)
         exit_Groub.draw(screen)
         platform_Grup.draw(screen)
-        GAme_oVer = player.update(GAme_oVer)
-        if GAme_oVer == -1:
-            if restart_button.draw():
-                world_data = []
-                level = 1
+        draw_lives()
+        GAme_oVer = player.update(GAme_oVer)  
+        if GAme_oVer  == -1:
+            if lives > 0:
+                lives -=1
+                world_data=[]
                 world = reset_level(level)
                 GAme_oVer = 0
+            else:
+                screen.blit(GAme_oVer_Image,(344,250))
+                if restart_button.draw():
+                    level = 1
+                    lives = 5
+                    world_data = []
+                    world = reset_level(level) 
+                    GAme_oVer = 0
+                    score = 0
 #       draw_grid()
         if GAme_oVer == 1:
             level+=1
