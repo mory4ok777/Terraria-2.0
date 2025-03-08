@@ -28,6 +28,19 @@ bg_image = pygame.transform.scale(bg_image,(800,800))
 GAme_oVer_Image = pygame.image.load("pixil-frame-0 (41).png")
 hart_full_image = pygame.image.load("fullhart.png")
 hart_kapput_image = pygame.image.load("kapputhart.png")
+platformaVVV= pygame.image.load("pixil-frame-0 (26).png")
+o1= pygame.image.load("pixil-frame-0 (27).png")
+o2= pygame.image.load("pixil-frame-0 (28).png")
+o3= pygame.image.load("pixil-frame-0 (29).png")
+o6= pygame.image.load("pixil-frame-0 (30).png")
+o4= pygame.image.load("pixil-frame-0 (31).png")
+o5= pygame.image.load("pixil-frame-0 (43).png")
+platvorma_pesok= pygame.image.load("pixil-frame-0 (43).png")
+sword7= pygame.image.load("sword7.webp")
+o7= pygame.image.load("pixil-frame-0 (32).png")
+o8= pygame.image.load("pixil-frame-0 (33).png")
+o9= pygame.image.load("pixil-frame-0 (34).png")
+coleckted_swords = []
 lives = 5
 def draw_grid():
     for line in range(0, 40):
@@ -117,6 +130,111 @@ class World():
                 if tile == 13:
                     platform = Platform(col_count*tile_size,row_count*tile_size,1,0)
                     platform_Grup.add(platform)
+                if tile == 14: 
+                    sword = Sword(col_count*tile_size,row_count*tile_size,1)
+                    sword_Group.add(sword)
+                if tile == 15: 
+                    sword = Sword(col_count*tile_size,row_count*tile_size,2)
+                    sword_Group.add(sword)
+                if tile == 16: 
+                    sword = Sword(col_count*tile_size,row_count*tile_size,3)
+                    sword_Group.add(sword)
+                if tile == 17: 
+                    sword = Sword(col_count*tile_size,row_count*tile_size,4)
+                    sword_Group.add(sword)                                                    
+                if tile == 18: 
+                    sword = Sword(col_count*tile_size,row_count*tile_size,5)
+                    sword_Group.add(sword)                                                    
+                if tile == 19: 
+                    sword = Sword(col_count*tile_size,row_count*tile_size,6)
+                    sword_Group.add(sword)                                                    
+                if tile == 20:
+                    img = pygame.transform.scale(o1,(tile_size, tile_size))
+                    img_rect = img.get_rect()
+                    img_rect.x = col_count * tile_size
+                    img_rect.y = row_count * tile_size
+                    tile =(img,img_rect)
+                    self.tile_list.append(tile)
+                if tile == 21:
+                    img = pygame.transform.scale(o2,(tile_size, tile_size))
+                    img_rect = img.get_rect()
+                    img_rect.x = col_count * tile_size
+                    img_rect.y = row_count * tile_size
+                    tile =(img,img_rect)
+                    self.tile_list.append(tile)
+                if tile == 22:
+                    img = pygame.transform.scale(o3,(tile_size, tile_size))
+                    img_rect = img.get_rect()
+                    img_rect.x = col_count * tile_size
+                    img_rect.y = row_count * tile_size
+                    tile =(img,img_rect)
+                    self.tile_list.append(tile)
+                if tile == 23:
+                    img = pygame.transform.scale(o4,(tile_size, tile_size))
+                    img_rect = img.get_rect()
+                    img_rect.x = col_count * tile_size
+                    img_rect.y = row_count * tile_size
+                    tile =(img,img_rect)
+                    self.tile_list.append(tile)
+                if tile == 24:
+                    img = pygame.transform.scale(o5,(tile_size, tile_size))
+                    img_rect = img.get_rect()
+                    img_rect.x = col_count * tile_size
+                    img_rect.y = row_count * tile_size
+                    tile =(img,img_rect)
+                    self.tile_list.append(tile)
+                if tile == 25:
+                    img = pygame.transform.scale(o6,(tile_size, tile_size))
+                    img_rect = img.get_rect()
+                    img_rect.x = col_count * tile_size
+                    img_rect.y = row_count * tile_size
+                    tile =(img,img_rect)
+                    self.tile_list.append(tile)
+                if tile == 26:
+                    img = pygame.transform.scale(o7,(tile_size, tile_size))
+                    img_rect = img.get_rect()
+                    img_rect.x = col_count * tile_size
+                    img_rect.y = row_count * tile_size
+                    tile =(img,img_rect)
+                    self.tile_list.append(tile)
+                if tile == 27:
+                    img = pygame.transform.scale(o8,(tile_size, tile_size))
+                    img_rect = img.get_rect()
+                    img_rect.x = col_count * tile_size
+                    img_rect.y = row_count * tile_size
+                    tile =(img,img_rect)
+                    self.tile_list.append(tile)
+                if tile == 28:
+                    img = pygame.transform.scale(o9,(tile_size, tile_size))
+                    img_rect = img.get_rect()
+                    img_rect.x = col_count * tile_size
+                    img_rect.y = row_count * tile_size
+                    tile =(img,img_rect)
+                    self.tile_list.append(tile)
+               
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
                 
                 
                 
@@ -160,6 +278,9 @@ class Player():
         global world 
         global level
         global lives 
+        global coleckted_swords
+        
+        
         
         key = pygame.key.get_pressed()
         if GAme_oVer == 0:
@@ -215,6 +336,11 @@ class Player():
                         dy = tile [1].top - self.rect.bottom
                         self.vel_y = 0 
                         self.in_air = False
+            sword_coleckted = pygame.sprite.spritecollide(self,sword_Group,True)
+            for sword in sword_coleckted:
+                coleckted_swords.append(sword)
+            
+            
             if pygame.sprite.spritecollide(self,enemy_GROuB,False )and not self.invisible:
                 lives -=1 
                 self.invisible = True
@@ -387,9 +513,14 @@ class Platform(pygame.sprite.Sprite):
             self.move_direction *= -1
             self.move_counter *= -1
 
-            
-            
-            
+class Sword(pygame.sprite.Sprite):           
+    def __init__(self,x,y,sword_number):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.image.load(f"sword{sword_number}.webp")
+        self.image = pygame.transform.scale(self.image,(tile_size,tile_size))
+        self.rect = self.image.get_rect()
+        self.rect.center = (x,y)
+        self.sword_number = sword_number     
             
             
             
@@ -609,6 +740,13 @@ bgimages = {
 def draw_lives():
     for i in range(lives):
         screen.blit(hart_full_image,(10+i*(tile_size//2+5),50))
+def draw_swords():
+    for i,swords in enumerate(coleckted_swords):
+        x = screen_width - (i+1)*(tile_size+5)
+        y = 10 
+        screen.blit(swords.image,(x,y))
+
+
 
 level = 2
 max_level = 9
@@ -616,6 +754,7 @@ enemy_GROuB = pygame.sprite.Group()
 BALAnda_GROuB = pygame.sprite.Group()
 exit_Groub = pygame.sprite.Group()
 platform_Grup = pygame.sprite.Group()
+sword_Group = pygame.sprite.Group()
 #world = World (world_data)
 player = Player(100,screen_height-130)  
 clock = pygame.time.Clock()
@@ -643,10 +782,13 @@ while run:
             
             enemy_GROuB.update()
             platform_Grup.update()
+            sword_Group.update()
         enemy_GROuB.draw(screen )
         BALAnda_GROuB.draw(screen)
         exit_Groub.draw(screen)
         platform_Grup.draw(screen)
+        sword_Group.draw(screen)
+        draw_swords
         draw_lives()
         GAme_oVer = player.update(GAme_oVer)  
         if GAme_oVer  == -1:
