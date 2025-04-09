@@ -58,6 +58,18 @@ sword7= pygame.image.load("sword7.webp")
 o7= pygame.image.load("pixil-frame-0 (32).png")
 o8= pygame.image.load("pixil-frame-0 (33).png")
 o9= pygame.image.load("pixil-frame-0 (34).png")
+flvlb_1= pygame.image.load("pixil-frame-0 (48).png")
+flvlb_2= pygame.image.load("pixil-frame-0 (49).png")
+flvlb_3= pygame.image.load("pixil-frame-0 (55).png")
+flvlb_4= pygame.image.load("pixil-frame-0 (56).png")
+os1 = pygame.image.load("os1.png")
+os2 = pygame.image.load("os2.png")
+os3 = pygame.image.load("os3.png")
+os4 = pygame.image.load("os4.png")
+derevo1 = pygame.image.load("derevo1.png")
+derevo2 = pygame.image.load("derevo2.png")
+boss = pygame.image.load("Boss.png")
+
 # Глобальні змінні
 clicked = False
 level = 1
@@ -157,34 +169,66 @@ def draw_world():
                 elif world_data[row][col] == 19:
                     img = pygame.transform.scale(swords6, (tile_size, tile_size))    
                     screen.blit(img, (col * tile_size, row * tile_size))
-                elif world_data[row][col] == 21:
+                elif world_data[row][col] == 20:
                     img = pygame.transform.scale(o1, (tile_size, tile_size))
                     screen.blit(img, (col * tile_size, row * tile_size))
-                elif world_data[row][col] == 22:
+                elif world_data[row][col] == 21:
                     img = pygame.transform.scale(o2, (tile_size, tile_size))
                     screen.blit(img, (col * tile_size, row * tile_size))
-                elif world_data[row][col] == 23:
+                elif world_data[row][col] == 22:
                     img = pygame.transform.scale(o3, (tile_size, tile_size))
                     screen.blit(img, (col * tile_size, row * tile_size))
-                elif world_data[row][col] == 24:
+                elif world_data[row][col] == 23:
                     img = pygame.transform.scale(o4, (tile_size, tile_size))
                     screen.blit(img, (col * tile_size, row * tile_size))
-                elif world_data[row][col] == 25:
+                elif world_data[row][col] == 24:
                     img = pygame.transform.scale(o5, (tile_size, tile_size))
                     screen.blit(img, (col * tile_size, row * tile_size))
-                elif world_data[row][col] == 26:
+                elif world_data[row][col] == 25:
                     img = pygame.transform.scale(o6, (tile_size, tile_size))
                     screen.blit(img, (col * tile_size, row * tile_size))
-                elif world_data[row][col] == 27:
+                elif world_data[row][col] == 26:
                     img = pygame.transform.scale(o7, (tile_size, tile_size))
                     screen.blit(img, (col * tile_size, row * tile_size))
-                elif world_data[row][col] == 28:
+                elif world_data[row][col] == 27:
                     img = pygame.transform.scale(o8, (tile_size, tile_size))
                     screen.blit(img, (col * tile_size, row * tile_size))
-                elif world_data[row][col] == 29:
+                elif world_data[row][col] == 28:
                     img = pygame.transform.scale(o9, (tile_size, tile_size))
                     screen.blit(img, (col * tile_size, row * tile_size))                    
-
+                elif world_data[row][col] == 29:
+                    img = pygame.transform.scale(flvlb_1, (tile_size, tile_size))
+                    screen.blit(img, (col * tile_size, row * tile_size))                    
+                elif world_data[row][col] == 30:
+                    img = pygame.transform.scale(flvlb_2, (tile_size, tile_size))
+                    screen.blit(img, (col * tile_size, row * tile_size))                    
+                elif world_data[row][col] == 31:
+                    img = pygame.transform.scale(flvlb_3, (tile_size, tile_size))
+                    screen.blit(img, (col * tile_size, row * tile_size))                    
+                elif world_data[row][col] == 32:
+                    img = pygame.transform.scale(flvlb_4, (tile_size, tile_size))
+                    screen.blit(img, (col * tile_size, row * tile_size))                    
+                elif world_data[row][col] == 33:#1
+                    img = pygame.transform.scale(os1, (tile_size, tile_size))
+                    screen.blit(img, (col * tile_size, row * tile_size))                    
+                elif world_data[row][col] == 34:#1
+                    img = pygame.transform.scale(os2, (tile_size, tile_size))
+                    screen.blit(img, (col * tile_size, row * tile_size))                    
+                elif world_data[row][col] == 35:#1
+                    img = pygame.transform.scale(os3, (tile_size, tile_size))
+                    screen.blit(img, (col * tile_size, row * tile_size))                    
+                elif world_data[row][col] == 36:#1
+                    img = pygame.transform.scale(os4, (tile_size, tile_size))
+                    screen.blit(img, (col * tile_size, row * tile_size))                    
+                elif world_data[row][col] == 37:#1
+                    img = pygame.transform.scale(derevo1, (tile_size, tile_size))
+                    screen.blit(img, (col * tile_size, row * tile_size))                    
+                elif world_data[row][col] == 38:#1
+                    img = pygame.transform.scale(derevo2, (tile_size, tile_size))
+                    screen.blit(img, (col * tile_size, row * tile_size))                    
+                elif world_data[row][col] == 40:
+                    img = pygame.transform.scale(boss, (tile_size*5, tile_size*5))
+                    screen.blit(img, (col * tile_size, row * tile_size))
  
                                 
                                 
@@ -253,12 +297,12 @@ while run:
             if x < cols and y < cols:
                 if event.y == 1:
                     world_data[y][x] +=1
-                    if world_data[y][x]> 30:
+                    if world_data[y][x]> 41:
                         world_data[y][x] = 0
                 elif event.y == -1:
                     world_data[y][x] -=1
                     if world_data[y][x]<0:
-                        world_data[y][x] = 30
+                        world_data[y][x] = 41
         if event.type == pygame.MOUSEBUTTONUP:
             clicked = False
         if event.type == pygame.KEYDOWN:

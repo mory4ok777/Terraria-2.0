@@ -40,8 +40,21 @@ sword7= pygame.image.load("sword7.webp")
 o7= pygame.image.load("pixil-frame-0 (32).png")
 o8= pygame.image.load("pixil-frame-0 (33).png")
 o9= pygame.image.load("pixil-frame-0 (34).png")
+flvb_1= pygame.image.load("pixil-frame-0 (48).png")
+flvb_2= pygame.image.load("pixil-frame-0 (49).png")
+flvb_3= pygame.image.load("pixil-frame-0 (55).png")
+flvb_4= pygame.image.load("pixil-frame-0 (56).png")
+os1 = pygame.image.load("os1.png")
+os2 = pygame.image.load("os2.png")
+os3 = pygame.image.load("os3.png")
+os4 = pygame.image.load("os4.png")
+derevo1 = pygame.image.load("derevo1.png")
+derevo2 = pygame.image.load("derevo2.png")
+boss_img = pygame.image.load("Boss.png")
 coleckted_swords = []
-lives = 5
+lives = 993
+current_musick = None
+
 def draw_grid():
     for line in range(0, 40):
         pygame.draw.line(screen, (255, 255, 255), (0, line * tile_size), (screen_width, line * tile_size))
@@ -52,6 +65,7 @@ GAme_oVer = 0
 class World():
     def __init__(self,data):
         self.tile_list = []
+        self.boss = None 
         dirt_img = pygame.image.load("dirt.png")#zemly foto
         oblothko_img = pygame.image.load("oblothko.png")
         row_count = 0
@@ -63,7 +77,7 @@ class World():
                     img_rect = img.get_rect()
                     img_rect.x = col_count * tile_size
                     img_rect.y = row_count * tile_size
-                    tile =(img,img_rect)
+                    tile =(img,img_rect,1)
                     self.tile_list.append(tile)
                 
                 if tile == 2:
@@ -71,7 +85,7 @@ class World():
                     img_rect = img.get_rect()
                     img_rect.x = col_count * tile_size
                     img_rect.y = row_count * tile_size
-                    tile =(img,img_rect)
+                    tile =(img,img_rect,2)
                     self.tile_list.append(tile)
                 if tile == 3:
                     enemy = Enemy(col_count * tile_size,row_count*tile_size+10)
@@ -87,42 +101,42 @@ class World():
                     img_rect = img.get_rect()
                     img_rect.x = col_count * tile_size
                     img_rect.y = row_count * tile_size
-                    tile =(img,img_rect)
+                    tile =(img,img_rect,6)
                     self.tile_list.append(tile)
                 if tile == 7:
                     img = pygame.transform.scale(vadaNis,(tile_size, tile_size))
                     img_rect = img.get_rect()
                     img_rect.x = col_count * tile_size
                     img_rect.y = row_count * tile_size
-                    tile =(img,img_rect)
+                    tile =(img,img_rect,7)
                     self.tile_list.append(tile)
                 if tile == 8:
                     img = pygame.transform.scale(pesok,(tile_size, tile_size))
                     img_rect = img.get_rect()
                     img_rect.x = col_count * tile_size
                     img_rect.y = row_count * tile_size
-                    tile =(img,img_rect)
+                    tile =(img,img_rect,8)
                     self.tile_list.append(tile)
                 if tile == 9:
                     img = pygame.transform.scale(mezduvodje,(tile_size, tile_size))
                     img_rect = img.get_rect()
                     img_rect.x = col_count * tile_size
                     img_rect.y = row_count * tile_size
-                    tile =(img,img_rect)
+                    tile =(img,img_rect,9)
                     self.tile_list.append(tile)
                 if tile == 10:
                     img = pygame.transform.scale(podzemelje,(tile_size, tile_size))
                     img_rect = img.get_rect()
                     img_rect.x = col_count * tile_size
                     img_rect.y = row_count * tile_size
-                    tile =(img,img_rect)
+                    tile =(img,img_rect,10)
                     self.tile_list.append(tile)
                 if tile == 11:
                     img = pygame.transform.scale(pesok_s,(tile_size, tile_size))
                     img_rect = img.get_rect()
                     img_rect.x = col_count * tile_size
                     img_rect.y = row_count * tile_size
-                    tile =(img,img_rect)
+                    tile =(img,img_rect,11)
                     self.tile_list.append(tile)
                 if tile == 12:
                     platform = Platform(col_count*tile_size,row_count*tile_size,0,1)
@@ -153,106 +167,295 @@ class World():
                     img_rect = img.get_rect()
                     img_rect.x = col_count * tile_size
                     img_rect.y = row_count * tile_size
-                    tile =(img,img_rect)
+                    tile =(img,img_rect,20)
                     self.tile_list.append(tile)
                 if tile == 21:
                     img = pygame.transform.scale(o2,(tile_size, tile_size))
                     img_rect = img.get_rect()
                     img_rect.x = col_count * tile_size
                     img_rect.y = row_count * tile_size
-                    tile =(img,img_rect)
+                    tile =(img,img_rect,21)
                     self.tile_list.append(tile)
                 if tile == 22:
                     img = pygame.transform.scale(o3,(tile_size, tile_size))
                     img_rect = img.get_rect()
                     img_rect.x = col_count * tile_size
                     img_rect.y = row_count * tile_size
-                    tile =(img,img_rect)
+                    tile =(img,img_rect,22)
                     self.tile_list.append(tile)
                 if tile == 23:
                     img = pygame.transform.scale(o4,(tile_size, tile_size))
                     img_rect = img.get_rect()
                     img_rect.x = col_count * tile_size
                     img_rect.y = row_count * tile_size
-                    tile =(img,img_rect)
+                    tile =(img,img_rect,23)
                     self.tile_list.append(tile)
                 if tile == 24:
                     img = pygame.transform.scale(o5,(tile_size, tile_size))
                     img_rect = img.get_rect()
                     img_rect.x = col_count * tile_size
                     img_rect.y = row_count * tile_size
-                    tile =(img,img_rect)
+                    tile =(img,img_rect,24)
                     self.tile_list.append(tile)
                 if tile == 25:
                     img = pygame.transform.scale(o6,(tile_size, tile_size))
                     img_rect = img.get_rect()
                     img_rect.x = col_count * tile_size
                     img_rect.y = row_count * tile_size
-                    tile =(img,img_rect)
+                    tile =(img,img_rect,25)
                     self.tile_list.append(tile)
                 if tile == 26:
                     img = pygame.transform.scale(o7,(tile_size, tile_size))
                     img_rect = img.get_rect()
                     img_rect.x = col_count * tile_size
                     img_rect.y = row_count * tile_size
-                    tile =(img,img_rect)
+                    tile =(img,img_rect,26)
                     self.tile_list.append(tile)
                 if tile == 27:
                     img = pygame.transform.scale(o8,(tile_size, tile_size))
                     img_rect = img.get_rect()
                     img_rect.x = col_count * tile_size
                     img_rect.y = row_count * tile_size
-                    tile =(img,img_rect)
+                    tile =(img,img_rect,27)
                     self.tile_list.append(tile)
                 if tile == 28:
                     img = pygame.transform.scale(o9,(tile_size, tile_size))
                     img_rect = img.get_rect()
                     img_rect.x = col_count * tile_size
                     img_rect.y = row_count * tile_size
-                    tile =(img,img_rect)
+                    tile =(img,img_rect,28)
                     self.tile_list.append(tile)
-               
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
+                if tile == 29:
+                    img = pygame.transform.scale(flvb_1,(tile_size, tile_size))
+                    img_rect = img.get_rect()
+                    img_rect.x = col_count * tile_size
+                    img_rect.y = row_count * tile_size
+                    tile =(img,img_rect,29)
+                    self.tile_list.append(tile)
+                if tile == 30:
+                    img = pygame.transform.scale(flvb_2,(tile_size, tile_size))
+                    img_rect = img.get_rect()
+                    img_rect.x = col_count * tile_size
+                    img_rect.y = row_count * tile_size
+                    tile =(img,img_rect,30)
+                    self.tile_list.append(tile)
+                if tile == 31:
+                    img = pygame.transform.scale(flvb_3,(tile_size, tile_size))
+                    img_rect = img.get_rect()
+                    img_rect.x = col_count * tile_size
+                    img_rect.y = row_count * tile_size
+                    tile =(img,img_rect,31)
+                    self.tile_list.append(tile)
+                if tile == 32:
+                    img = pygame.transform.scale(flvb_4,(tile_size, tile_size))
+                    img_rect = img.get_rect()
+                    img_rect.x = col_count * tile_size
+                    img_rect.y = row_count * tile_size
+                    tile =(img,img_rect,32)
+                    self.tile_list.append(tile)              
+                if tile == 33:
+                    img = pygame.transform.scale(os1,(tile_size, tile_size))
+                    img_rect = img.get_rect()
+                    img_rect.x = col_count * tile_size
+                    img_rect.y = row_count * tile_size
+                    tile =(img,img_rect,33)
+                    self.tile_list.append(tile)
+                if tile == 34:
+                    img = pygame.transform.scale(os2,(tile_size, tile_size))
+                    img_rect = img.get_rect()
+                    img_rect.x = col_count * tile_size
+                    img_rect.y = row_count * tile_size
+                    tile =(img,img_rect,34)
+                    self.tile_list.append(tile)
+                if tile == 35:
+                    img = pygame.transform.scale(os3,(tile_size, tile_size))
+                    img_rect = img.get_rect()
+                    img_rect.x = col_count * tile_size
+                    img_rect.y = row_count * tile_size
+                    tile =(img,img_rect,35)
+                    self.tile_list.append(tile)
+                if tile == 36:
+                    img = pygame.transform.scale(os4,(tile_size, tile_size))
+                    img_rect = img.get_rect()
+                    img_rect.x = col_count * tile_size
+                    img_rect.y = row_count * tile_size
+                    tile =(img,img_rect,36)
+                    self.tile_list.append(tile)
+                if tile == 37:
+                    img = pygame.transform.scale(derevo1,(tile_size, tile_size))
+                    img_rect = img.get_rect()
+                    img_rect.x = col_count * tile_size
+                    img_rect.y = row_count * tile_size
+                    tile =(img,img_rect,37)
+                    self.tile_list.append(tile)
+                if tile == 38:
+                    img = pygame.transform.scale(derevo2,(tile_size, tile_size))
+                    img_rect = img.get_rect()
+                    img_rect.x = col_count * tile_size
+                    img_rect.y = row_count * tile_size
+                    tile =(img,img_rect,38)
+                    self.tile_list.append(tile)
+                if tile ==40:
+                    self.boss = Bosyra(col_count*tile_size,row_count*tile_size)
+                    boss_group.add(self.boss)
                 col_count +=1
-            row_count += 1
-
+            row_count+=1
     def draw(self):
         for i in self.tile_list:
             screen.blit(i[0],i[1])
+           
+class Atackkristalom_black:
+    def __init__(self,x,y):
+        self.images= []
+        for i in range(1,14):
+            img = pygame.image.load(f"KTH{i}.png")
+            img = pygame.transform.scale(img,(75,100))
+            self.images.append(img)
+            
+        self.index =0 
+        self.image = self.images[self.index]
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+        self.active = True
+        self.animation_speed = 2
+        self.current_frame = 0
+        self.lifetime = 200
+    def update(self):    
+        if self.active:
+            self.current_frame +=1
+            if self.current_frame >= self.animation_speed:
+                self.current_frame = 0
+                self.index +=1
+                if self.index >= len(self.images):
+                    self.index = len(self.images) -1 
+                self.image = self.images[self.index]     
+    def draw(self,screen):
+        if self.active:
+            screen.blit(self.image,self.rect)
+class Atackkristalom_blackR:
+    def __init__(self,x,y):
+        self.images= []
+        for i in range(1,14):
+            img = pygame.image.load(f"KTH{i}.png")
+            img = pygame.transform.flip(img,1,1)
+            self.images.append(img)
+            
+        self.index =0 
+        self.image = self.images[self.index]
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+        self.active = True
+        self.animation_speed = 2
+        self.current_frame = 0
+        self.lifetime = 200
+    def update(self):    
+        if self.active:
+            self.current_frame +=1
+            if self.current_frame >= self.animation_speed:
+                self.current_frame = 0
+                self.index +=1
+                if self.index >= len(self.images):
+                    self.index = len(self.images) -1 
+                self.image = self.images[self.index]  
+    def draw(self,screen):
+        if self.active:
+            screen.blit(self.image,self.rect)
+# class Atackkristalom_yellow:
+#   def __init__(self,x,y):
+#        self.images= []
+#        for i in range(1,14):
+#           img = pygame.image.load(f"KY1{i}.png")
+#            img = pygame.transform.scale(img,(75,100))
+#            self.images.append(img)
+#            
+#        self.index =0 
+#        self.image = self.images[self.index]
+#        self.rect = self.image.get_rect()
+#        self.rect.x = x
+#        self.rect.y = y
+#        self.active = True
+#        self.animation_speed = 2
+#        self.current_frame = 0
+#        self.lifetime = 200
+#    def update(self):    
+#        if self.active:
+#            self.current_frame +=1
+#            if self.current_frame >= self.animation_speed:
+#                self.current_frame = 0
+#                self.index +=1
+#                if self.index >= len(self.images):
+#                    self.index = len(self.images) -1 
+#                self.image = self.images[self.index]     
+
+    def draw(self,screen):
+        if self.active:
+            screen.blit(self.image,self.rect)
+class Bosyra(pygame.sprite.Sprite):
+    def __init__(self,x,y):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.transform.scale(boss_img,(125,125))
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y=y
+        self.helth = 10
+        self.atackcd = 400
+        self.cristals =[]
+        self.attacikng = False
+    def take_damage(self,damage):
+        self.helth -= damage 
+        if self.helth <= 0:
+            self.kill()
+    def atack(self):
+        if self.atackcd <=0 and not self.attacikng:
+            self.attacikng = True
+            self.attack_duration = 300
+         
+
+            cristal = Atackkristalom_black(88,636)
+            cristal2 = Atackkristalom_blackR(563,600)
+            cristal3 = Atackkristalom_black(288,636)
+            cristal4 = Atackkristalom_black(488,636)
+            cristal.lifetime = 200
+            cristal2.lifetime = 200
+            self.cristals.append(cristal)
+            self.cristals.append(cristal2)
+            self.cristals.append(cristal3)
+            self.cristals.append(cristal4)
+
+            self.atackcd = 400
+    def update(self):
+        self.atackcd-=1
+        if self.attacikng:
+            self.attack_duration -=1
+            if self.attack_duration <= 0:
+                self.attacikng = False
+        self.atack()
+        for i in self.cristals[:]:
+            i.update()
+            i.lifetime -=1
+            if i.lifetime <= 0 or not i.active:
+                self.cristals.remove(i)
+    def draw(self,screen):
+        screen.blit(self.image,self.rect)
+        for i in self.cristals:
+            i.draw(screen)
+
 class Player():
     def __init__(self,x,y):
         self.reset(x,y)
         self.invisible= False
         self.invisibletomer = 0
+        self.attaking = False
+        self.cdattaking = 0
     def reset(self,x,y) :
         self.images_right = []
         self.images_left = []
+        self.Atack_Right = []
+        self.Atack_left = []
         self.index = 0
+        self.atack_index = 0
         self.counter = 0
         self.dead_image = pygame.image.load("pixil-frame-0 (22).png")
         for num in range(1, 4):
@@ -261,6 +464,18 @@ class Player():
             img_left = pygame.transform.flip(img_right, True, False)
             self.images_right.append(img_right)
             self.images_left.append(img_left)
+        for i in range(1,5):
+            Atack_Right = pygame.image.load(f"PLAYERFINALLVL{i}.png")
+            Atack_Right = pygame.transform.scale(Atack_Right,(40,44))
+            Atack_left = pygame.transform.flip(Atack_Right,True,False)
+            self.Atack_Right.append(Atack_Right)
+            self.Atack_left.append(Atack_left)
+            
+            
+            
+            
+            
+            
         self.image = self.images_right[self.index]
         self.rect = self.image.get_rect()
         self.rect.x = x
@@ -305,6 +520,38 @@ class Player():
                 dx +=5
                 self.counter +=1
                 self.direction = 1
+            for event in pygame.event.get():
+                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    if not self.attaking and self.cdattaking <= 0:
+                        self.attaking = True
+                        self.cdattaking = 20
+                        self.index = 0
+            if self.attaking:
+                self.atack_index +=1
+                if self.atack_index >= len(self.Atack_Right):
+                    self.attaking = False    
+                    self.atack_index = 0
+                else:
+                    attack_rect = pygame.Rect(
+                    self.rect.x + (self.direction * tile_size),
+                    self.rect.y,
+                    tile_size+1,
+                    tile_size+1   
+                    )
+                    pygame.draw.rect(screen,(255,0,0),attack_rect,2)
+                    for enemy in enemy_GROuB:
+                        if attack_rect.colliderect(enemy.rect):
+                            enemy.take_damage(1)
+                    for enemy in boss_group:
+                        if attack_rect.colliderect(enemy.rect):
+                            enemy.take_damage(1)
+                    
+            if self.cdattaking > 0:
+                self.cdattaking -=1
+                
+
+
+
             if self.counter > wolk_kd:
                 self.counter = 0
                 self.index +=1
@@ -314,7 +561,14 @@ class Player():
                     self.image = self.images_right[self.index]
                 if self.direction == -1:
                     self.image = self.images_left[self.index]          
-
+            if self.attaking and self.direction == 1:
+                self.image = self.Atack_Right[self.atack_index]
+                
+            elif self.attaking and self.direction == -1:
+                self.image = self.Atack_left[self.atack_index]
+                
+            
+            
             self.vel_y +=1
             if self.vel_y > 10:
                 self.vel_y = 10 
@@ -322,10 +576,13 @@ class Player():
             
         
             
-            
-            
+
             self.in_air = True
             for tile in world.tile_list:
+                tile_img,tile_rect,tile_type = tile
+                if tile_type in [37,38]:
+                    continue
+                    
                 if tile [1].colliderect(self.rect.x + dx,self.rect.y ,self.width,self.height):
                     dx = 0
                 if tile [1].colliderect(self.rect.x,self.rect.y + dy,self.width,self.height): 
@@ -369,7 +626,7 @@ class Player():
                     world = reset_level(level)
                     GAme_oVer = 0
                     break 
-                        
+                                
            #for platform in platform
 
             for platform in platform_Grup:
@@ -385,26 +642,12 @@ class Player():
                         dy = 0
                     if platform.move_x !=0:
                         self.rect.x += platform.move_direction       
-                
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
+
             self.rect.x += dx
             self.rect.y += dy
                 
         elif GAme_oVer == -1:
+            pygame.mixer.music.stop()
             self.image = self.dead_image
             if self.rect.y > 200:
                 self.rect.y -=5
@@ -429,6 +672,12 @@ class Enemy(pygame.sprite.Sprite):
         self.rect.y = y
         self.move_direction = 1
         self.move_counter = 0
+        self.health = 1
+    def take_damage(self,damage):
+        self.health -= damage 
+        if self.health <= 0:
+            self.kill()
+
     def update(self):
         self.rect.x += self.move_direction
         self.move_counter += 1
@@ -445,12 +694,23 @@ class LAVAnda(pygame.sprite.Sprite):
         self.rect.y = y
 
 def reset_level(level):
+
+    pygame.mixer.music.stop()
+    if level in lvl_musuk:
+        pygame.mixer.music.load(lvl_musuk[level])
+        pygame.mixer.music.play(-1)
+        pygame.mixer.music.set_volume(0.2)
+    else:
+        pygame.mixer.music.load("Mlvl1.mp3")
+        pygame.mixer.music.play(-1)
+        pygame.mixer.music.set_volume(0.2)
     player.reset(100,screen_height-130)        
     enemy_GROuB.empty()
     BALAnda_GROuB.empty()
     exit_Groub.empty()
     platform_Grup.empty()
-    
+    sword_Group.empty()
+    boss_group.empty()
     if path.exists(f"level{level}_data"):
         pickle_in = open(f"level{level}_data","rb")
         world_data = pickle.load(pickle_in)
@@ -483,9 +743,6 @@ class Button():
         return action
                 
 mixer.init()
-
-pygame.mixer.music.load("digiffects-sound-effects-library-capercaillie-bird-in-forest-with-other-birds-version-1.mp3")
-pygame.mixer.music.play(-1,0.0,5000)
 jump_fx = pygame.mixer.Sound("3f00da9bdf24c19.mp3")
 jump_fx.set_volume(0.5)
 GAme_oVer_fx = pygame.mixer.Sound("680efe34665ab92.mp3")
@@ -503,7 +760,8 @@ class Platform(pygame.sprite.Sprite):
         self.move_direction  = 1 
         self.move_x = move_x
         self.move_y = move_y
-        
+
+
         
     def update(self):
         self.rect.x += self.move_direction * self.move_x
@@ -511,8 +769,7 @@ class Platform(pygame.sprite.Sprite):
         self.move_counter +=1
         if abs(self.move_counter)> 50:
             self.move_direction *= -1
-            self.move_counter *= -1
-
+            self.move_counter *= -1                
 class Sword(pygame.sprite.Sprite):           
     def __init__(self,x,y,sword_number):
         pygame.sprite.Sprite.__init__(self)
@@ -521,6 +778,7 @@ class Sword(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = (x,y)
         self.sword_number = sword_number     
+
             
             
             
@@ -539,222 +797,52 @@ class Sword(pygame.sprite.Sprite):
             
             
             
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
+lvl_musuk = {
+    1:"Mlvl1.mp3",
+    2:"Mlvl2.mp3",
+    3:"Mlvl3.mp3",
+    3:"Mlvl3.mp3",
+    3:"Mlvl3.mp3",
+    3:"Mlvl3.mp3",
+    3:"MlvlF.mp3"
+}           
+           
 bglvl1 = pygame.image.load("OIP (4).png")
 bglvl2 = pygame.image.load("bglvl2.png")
+bglvl3 = pygame.image.load("lvlkakoito.png")
+bglvl4 = pygame.image.load("OIP (4).png")
+bglvl5 = pygame.image.load("OIP (4).png")
+bglvl6 = pygame.image.load("OIP (4).png")
+bglvl7= pygame.image.load("pixil-frame-0 (47).png")
 bgimages = {
     1:pygame.transform.scale(bglvl1,(screen_width,screen_height)),
-    2:pygame.transform.scale(bglvl2,(screen_width,screen_height))
-    
+    2:pygame.transform.scale(bglvl2,(screen_width,screen_height)),
+    3:pygame.transform.scale(bglvl3,(screen_width,screen_height)),
+    4:pygame.transform.scale(bglvl4,(screen_width,screen_height)),
+    5:pygame.transform.scale(bglvl5,(screen_width,screen_height)),
+    6:pygame.transform.scale(bglvl6,(screen_width,screen_height)),
+    7:pygame.transform.scale(bglvl7,(screen_width,screen_height)),
 }      
 
 def draw_lives():
     for i in range(lives):
-        screen.blit(hart_full_image,(10+i*(tile_size//2+5),50))
+        screen.blit(hart_full_image,(700+i*(tile_size//2+5),25))
 def draw_swords():
     for i,swords in enumerate(coleckted_swords):
-        x = screen_width - (i+1)*(tile_size+5)
+        x = (10+i*(tile_size+5))
         y = 10 
         screen.blit(swords.image,(x,y))
 
 
 
-level = 2
-max_level = 9
+level = 7
+max_level = 10
 enemy_GROuB = pygame.sprite.Group()
 BALAnda_GROuB = pygame.sprite.Group()
 exit_Groub = pygame.sprite.Group()
 platform_Grup = pygame.sprite.Group()
 sword_Group = pygame.sprite.Group()
+boss_group = pygame.sprite.Group()
 #world = World (world_data)
 player = Player(100,screen_height-130)  
 clock = pygame.time.Clock()
@@ -767,6 +855,7 @@ if path.exists(f"level{level}_data"):
     world_data = pickle.load(pickle_in)
 world = World(world_data)
 while run:
+
     clock.tick(40)
     curimage = bgimages.get(level,bg_image)
     screen.blit(curimage,(0,0))
@@ -783,15 +872,41 @@ while run:
             enemy_GROuB.update()
             platform_Grup.update()
             sword_Group.update()
+            boss_group.update()
+        for boss in boss_group:
+            boss.update()
+            boss.draw(screen)
+            if  player.rect.colliderect(boss.rect):
+                    if not player.invisible:
+                        lives-=1
+                        player.invisible = True
+                        player.invisibletomer = 20
+                        if lives == 0:
+                            GAme_oVer = -1
+                            GAme_oVer_fx.play()
+                    for crystal in boss.cristals:
+                        if player.rect.colliderect(crystal.rect):
+                            if not player.invisible:
+                                lives-=1
+                                player.invisible = True
+                                player.invisibletomer = 20
+                                if lives == 0:
+                                    GAme_oVer = -1
+                                    GAme_oVer_fx.play() 
+                                crystal.active = False          
+        if world.boss is not None:
+            boss_group.draw(screen)
+
         enemy_GROuB.draw(screen )
         BALAnda_GROuB.draw(screen)
         exit_Groub.draw(screen)
         platform_Grup.draw(screen)
         sword_Group.draw(screen)
-        draw_swords
+        draw_swords()
         draw_lives()
         GAme_oVer = player.update(GAme_oVer)  
         if GAme_oVer  == -1:
+            pygame.mixer.music.stop()
             if lives > 0:
                 lives -=1
                 world_data=[]
@@ -814,15 +929,16 @@ while run:
                 world =reset_level(level)
                 GAme_oVer = 0
             else :
+        
                 if restart_button.draw():
                     level=1
                     world_data = []
                     world =reset_level(level)
                     GAme_oVer = 0
-
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
+
     pygame.display.update()
     
     
