@@ -49,6 +49,7 @@ swords3  = pygame.image.load("sword3.webp")
 swords4 = pygame.image.load("sword4.webp")
 swords5  =pygame.image.load("sword5.webp")
 swords6  =pygame.image.load("sword6.webp")
+swords7  =pygame.image.load("sword7.webp")
 platformaVVV= pygame.image.load("pixil-frame-0 (26).png")
 o1= pygame.image.load("pixil-frame-0 (27).png")
 o2= pygame.image.load("pixil-frame-0 (28).png")
@@ -180,6 +181,9 @@ def draw_world():
                     screen.blit(img, (col * tile_size, row * tile_size))
                 elif world_data[row][col] == 19:
                     img = pygame.transform.scale(swords6, (tile_size, tile_size))    
+                    screen.blit(img, (col * tile_size, row * tile_size))
+                elif world_data[row][col] == 53:
+                    img = pygame.transform.scale(swords7, (tile_size, tile_size))    
                     screen.blit(img, (col * tile_size, row * tile_size))
                 elif world_data[row][col] == 20:
                     img = pygame.transform.scale(o1, (tile_size, tile_size))
@@ -345,12 +349,12 @@ while run:
             if x < cols and y < cols:
                 if event.y == 1:
                     world_data[y][x] +=1
-                    if world_data[y][x]> 53:
+                    if world_data[y][x]> 54:
                         world_data[y][x] = 0
                 elif event.y == -1:
                     world_data[y][x] -=1
                     if world_data[y][x]<0:
-                        world_data[y][x] = 53
+                        world_data[y][x] = 54
         if event.type == pygame.MOUSEBUTTONUP:
             clicked = False
         if event.type == pygame.KEYDOWN:

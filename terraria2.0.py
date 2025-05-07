@@ -174,7 +174,10 @@ class World():
                     sword_Group.add(sword)                                                    
                 if tile == 19 and 6 not in [s.sword_number for s in coleckted_swords]:  
                     sword = Sword(col_count*tile_size,row_count*tile_size,6)
-                    sword_Group.add(sword)                                                    
+                    sword_Group.add(sword)      
+                if tile == 53 and 7 not in [s.sword_number for s in coleckted_swords]:  
+                    sword = Sword(col_count*tile_size,row_count*tile_size,7)
+                    sword_Group.add(sword)                                               
                 if tile == 20:
                     img = pygame.transform.scale(o1,(tile_size, tile_size))
                     img_rect = img.get_rect()
@@ -541,15 +544,19 @@ class Bosyra(pygame.sprite.Sprite):
         self.rect.y=y
         self.helth = 80
         self.atackcd = 400
+        self.atackastreloicd = 0
         self.cristals =[]
         self.attacikng = False
         self.current_attack_type = 0
         self.attack_switch_timer = 0
         self.attack_switch_delay = 500
+        
     def take_damage(self,damage):
         self.helth -= damage 
         if self.helth <= 0:
             self.kill()
+    def check_player_height(self,player):
+        return player.rect.y <= 525
     def atack(self):
         if self.atackcd <=0 and not self.attacikng:
             self.attacikng = True
@@ -584,32 +591,35 @@ class Bosyra(pygame.sprite.Sprite):
                 
                 self.current_attack_type = 2
                 self.attack_switch_timer = self.attack_switch_delay
-            elif self.current_attack_type == 2:
+            else:
                 cristal8 = Supersnositheluronasonnyerixon993(79 ,669)
                 cristal8.lifetime = 200
                 self.cristals.append(cristal8)
-                self.current_attack_type = 3
-                self.attack_switch_timer = self.attack_switch_delay                
-            else:
-                cristal9 = lutajaatakaviolrthjivoistreloi(200,275)
-                cristal10 = lutajaatakaviolrthjivoistreloi(565,330)
-                cristal11 = lutajaatakaviolrthjivoistreloi(370,125)
-                cristal12 = lutajaatakaviolrthjivoistreloi(620,330)
-                self.cristals.append(cristal9)
-                self.cristals.append(cristal10)
-                self.cristals.append(cristal11)
-                self.cristals.append(cristal12)
-                cristal9.lifetime = 200
-                cristal10.lifetime = 200
-                cristal11.lifetime = 200 
                 self.current_attack_type = 0
-                self.attack_switch_timer = self.attack_switch_delay
+                self.attack_switch_timer = self.attack_switch_delay         
+            self.atackcd = 400       
+    def lyutayastrela(self):
+            cristal9 = lutajaatakaviolrthjivoistreloi(200,275)
+            cristal10 = lutajaatakaviolrthjivoistreloi(565,330)
+            cristal11 = lutajaatakaviolrthjivoistreloi(370,125)
+            cristal12 = lutajaatakaviolrthjivoistreloi(620,330)
+            self.cristals.append(cristal9)
+            self.cristals.append(cristal10)
+            self.cristals.append(cristal11)
+            self.cristals.append(cristal12)
+            cristal9.lifetime = 200
+            cristal10.lifetime = 200
+            cristal11.lifetime = 200 
+            self.current_attack_type = 0
+            self.attack_switch_timer = self.attack_switch_delay
             
-            
-            
-            self.atackcd = 400
-    def update(self):
+            self.atackastreloicd = 200
+    def update(self,player):
         self.atackcd-=1
+        self.atackastreloicd -=1
+
+        if self.check_player_height(player) and self.atackastreloicd <=0:
+            self.lyutayastrela()
 
         if self.attack_switch_timer > 0 :
             self.attack_switch_timer -=1
@@ -696,17 +706,17 @@ class Player():
                 
                 
                 
-            if key[pygame.K_b] and self.jumped == False and self.in_air == False:
+            if key[pygame.K_SPACE] and self.jumped == False and self.in_air == False:
                 jump_fx.play()
                 self.vel_y = -14
                 self.jumped = True
-            if key[pygame.K_b] == False:
+            if key[pygame.K_SPACE] == False:
                 self.jumped = False
-            if key[pygame.K_LEFT]:
+            if key[pygame.K_a]:
                 dx -=5
                 self.counter +=1
                 self.direction = -1
-            if key[pygame.K_RIGHT]:
+            if key[pygame.K_d]:
                 dx +=5
                 self.counter +=1
                 self.direction = 1
@@ -801,7 +811,7 @@ class Player():
                 tile_img,tile_rect,tile_type = tile
                 if tile_type == 44 and len(coleckted_swords) >= 7 and not has_final_sword:
                     coleckted_swords.clear()
-                    final_swordd = Sword(0,0,7)
+                    final_swordd = Sword(0,0,8)
                     coleckted_swords.append(final_swordd)
                     has_final_sword = True
             for tile in world.tile_list:
@@ -1106,7 +1116,7 @@ class LavaPlatform(pygame.sprite.Sprite):
 class Sword(pygame.sprite.Sprite):           
     def __init__(self,x,y,sword_number):
         pygame.sprite.Sprite.__init__(self)
-        if sword_number == 7:
+        if sword_number == 8:
             self.image = pygame.image.load("vaukrutimeth.png")
         else:
             self.image = pygame.image.load(f"sword{sword_number}.webp")
@@ -1174,7 +1184,7 @@ def draw_swords():
 
 
 
-level = 7
+level = 1
 max_level = 10
 enemy_GROuB = pygame.sprite.Group()
 enemy_GROuB2 = pygame.sprite.Group()
@@ -1222,9 +1232,9 @@ while run:
             enemy_GROuB4.update()
             platform_Grup.update()
             sword_Group.update()
-            boss_group.update()
+            boss_group.update(player)
         for boss in boss_group:
-            boss.update()
+            boss.update(player)
             boss.draw(screen)
             if  player.rect.colliderect(boss.rect):
                     if not player.invisible:
