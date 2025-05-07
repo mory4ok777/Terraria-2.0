@@ -30,6 +30,9 @@ lava_img = pygame.image.load('LAVAnda.png')
 # coin_img = pygame.image.load('img/coin.png')
 exit_img =pygame.Surface((tile_size,int(tile_size*1.5)))#
 exit_img.fill((255,0,0))
+
+exit_img2 =pygame.Surface((tile_size,int(tile_size*1.5)))#
+exit_img2.fill((0,255,0))
 save_img = pygame.image.load('save_btn.png')
 load_img = pygame.image.load('load_btn.png')
 vodavERh = pygame.image.load("pixil-frame-0 (8).png")
@@ -54,7 +57,7 @@ o6= pygame.image.load("pixil-frame-0 (30).png")
 o4= pygame.image.load("pixil-frame-0 (31).png")
 o5= pygame.image.load("pixil-frame-0 (43).png")
 platvorma_pesok= pygame.image.load("pixil-frame-0 (43).png")
-sword7= pygame.image.load("sword7.webp")
+fbol =  pygame.image.load("fbol.png")
 o7= pygame.image.load("pixil-frame-0 (32).png")
 o8= pygame.image.load("pixil-frame-0 (33).png")
 o9= pygame.image.load("pixil-frame-0 (34).png")
@@ -69,7 +72,16 @@ os4 = pygame.image.load("os4.png")
 derevo1 = pygame.image.load("derevo1.png")
 derevo2 = pygame.image.load("derevo2.png")
 boss = pygame.image.load("Boss.png")
-
+bla1 = pygame.image.load("bla1.png")
+bla2 = pygame.image.load("bla2.png")
+bla3 = pygame.image.load("bla3.png")
+pethka=  pygame.image.load("pethka.png")
+slizenpustini =  pygame.image.load("slizenpustini.png")
+portha =  pygame.image.load("portha.png")
+ads =  pygame.image.load("ads.png")
+helikopter = pygame.image.load("helikopter.png")
+krisha = pygame.image.load("krisha.png") 
+lavvovajaplatvormaimenjidjonisilverhanda = pygame.image.load("pixil-frame-0 (58).png")
 # Глобальні змінні
 clicked = False
 level = 1
@@ -229,16 +241,52 @@ def draw_world():
                 elif world_data[row][col] == 40:
                     img = pygame.transform.scale(boss, (tile_size*5, tile_size*5))
                     screen.blit(img, (col * tile_size, row * tile_size))
- 
-                                
-                                
+                elif world_data[row][col] == 41:
+                    img = pygame.transform.scale(bla1, (tile_size, tile_size))
+                    screen.blit(img, (col * tile_size, row * tile_size))
+                elif world_data[row][col] == 42:
+                    img = pygame.transform.scale(bla2, (tile_size, tile_size))
+                    screen.blit(img, (col * tile_size, row * tile_size))
+                elif world_data[row][col] == 43:
+                    img = pygame.transform.scale(bla3, (tile_size, tile_size))
+                    screen.blit(img, (col * tile_size, row * tile_size))
+                elif world_data[row][col] == 44:
+                    img = pygame.transform.scale(pethka, (tile_size, tile_size))
+                    screen.blit(img, (col * tile_size, row * tile_size))
+                elif world_data[row][col] == 45:
+                    img = pygame.transform.scale(exit_img2, (tile_size, int(tile_size * 1.5)))
+                    screen.blit(img, (col * tile_size, row * tile_size - (tile_size // 2)))
+                elif world_data[row][col] == 46:
+                    img = pygame.transform.scale(fbol, (tile_size, tile_size))
+                    screen.blit(img, (col * tile_size, row * tile_size)) 
+                elif world_data[row][col] == 47:
+                    img = pygame.transform.scale(lavvovajaplatvormaimenjidjonisilverhanda, (tile_size, tile_size // 2))
+                    screen.blit(img, (col * tile_size, row * tile_size))
+                elif world_data[row][col] == 48:
+                    img = pygame.transform.scale(slizenpustini, (tile_size, int(tile_size * 0.75)))
+                    screen.blit(img, (col * tile_size, row * tile_size + (tile_size * 0.25)))
+                elif world_data[row][col] == 49:
+                    img = pygame.transform.scale(ads, (tile_size, int(tile_size * 0.75)))
+                    screen.blit(img, (col * tile_size, row * tile_size + (tile_size * 0.25)))
+                elif world_data[row][col] == 50:
+                    img = pygame.transform.scale(portha, (tile_size, int(tile_size * 0.75)))
+                    screen.blit(img, (col * tile_size, row * tile_size + (tile_size * 0.25)))
+                elif world_data[row][col] == 51:
+                    img = pygame.transform.scale(krisha, (tile_size, tile_size))
+                    screen.blit(img, (col * tile_size, row * tile_size))
+                elif world_data[row][col] == 52:
+                    img = pygame.transform.scale(helikopter, (tile_size, tile_size))
+                    screen.blit(img, (col * tile_size, row * tile_size))
+                    
+                continue             
+    
                                 
                                 
                                                 
                 
                 
-                
-                
+                                                                                                                                                                               
+                       
                 
 # Клас кнопки
 class Button():
@@ -297,12 +345,12 @@ while run:
             if x < cols and y < cols:
                 if event.y == 1:
                     world_data[y][x] +=1
-                    if world_data[y][x]> 41:
+                    if world_data[y][x]> 53:
                         world_data[y][x] = 0
                 elif event.y == -1:
                     world_data[y][x] -=1
                     if world_data[y][x]<0:
-                        world_data[y][x] = 41
+                        world_data[y][x] = 53
         if event.type == pygame.MOUSEBUTTONUP:
             clicked = False
         if event.type == pygame.KEYDOWN:

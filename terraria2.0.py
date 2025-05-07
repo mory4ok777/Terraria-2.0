@@ -36,7 +36,6 @@ o6= pygame.image.load("pixil-frame-0 (30).png")
 o4= pygame.image.load("pixil-frame-0 (31).png")
 o5= pygame.image.load("pixil-frame-0 (43).png")
 platvorma_pesok= pygame.image.load("pixil-frame-0 (43).png")
-sword7= pygame.image.load("sword7.webp")
 o7= pygame.image.load("pixil-frame-0 (32).png")
 o8= pygame.image.load("pixil-frame-0 (33).png")
 o9= pygame.image.load("pixil-frame-0 (34).png")
@@ -51,8 +50,22 @@ os4 = pygame.image.load("os4.png")
 derevo1 = pygame.image.load("derevo1.png")
 derevo2 = pygame.image.load("derevo2.png")
 boss_img = pygame.image.load("Boss.png")
+bgi6 = pygame.image.load("bgi6.png")
+bla1 = pygame.image.load("bla1.png")
+bla2 = pygame.image.load("bla2.png")
+bla3 = pygame.image.load("bla3.png")
+pethka=  pygame.image.load("pethka.png")
+fbol =  pygame.image.load("fbol.png")
+slizenpustini =  pygame.image.load("slizenpustini.png")
+portha =  pygame.image.load("portha.png")
+ads =  pygame.image.load("ads.png")
+helikopter = pygame.image.load("helikopter.png")
+krisha = pygame.image.load("krisha.png") 
+final_sword = pygame.transform.scale(pygame.image.load("vaukrutimeth.png"),(50,50))
+has_final_sword = False
+lavvovajaplatvormaimenjidjonisilverhanda = pygame.image.load("pixil-frame-0 (58).png")
 coleckted_swords = []
-lives = 993
+lives = 10
 current_musick = None
 
 def draw_grid():
@@ -144,22 +157,22 @@ class World():
                 if tile == 13:
                     platform = Platform(col_count*tile_size,row_count*tile_size,1,0)
                     platform_Grup.add(platform)
-                if tile == 14: 
+                if tile == 14 and 1 not in [s.sword_number for s in coleckted_swords]: 
                     sword = Sword(col_count*tile_size,row_count*tile_size,1)
                     sword_Group.add(sword)
-                if tile == 15: 
+                if tile == 15 and 2 not in [s.sword_number for s in coleckted_swords]:  
                     sword = Sword(col_count*tile_size,row_count*tile_size,2)
                     sword_Group.add(sword)
-                if tile == 16: 
+                if tile == 16 and 3 not in [s.sword_number for s in coleckted_swords]: 
                     sword = Sword(col_count*tile_size,row_count*tile_size,3)
                     sword_Group.add(sword)
-                if tile == 17: 
+                if tile == 17 and 4 not in [s.sword_number for s in coleckted_swords]: 
                     sword = Sword(col_count*tile_size,row_count*tile_size,4)
                     sword_Group.add(sword)                                                    
-                if tile == 18: 
+                if tile == 18 and 5 not in [s.sword_number for s in coleckted_swords]:  
                     sword = Sword(col_count*tile_size,row_count*tile_size,5)
                     sword_Group.add(sword)                                                    
-                if tile == 19: 
+                if tile == 19 and 6 not in [s.sword_number for s in coleckted_swords]:  
                     sword = Sword(col_count*tile_size,row_count*tile_size,6)
                     sword_Group.add(sword)                                                    
                 if tile == 20:
@@ -298,6 +311,71 @@ class World():
                 if tile ==40:
                     self.boss = Bosyra(col_count*tile_size,row_count*tile_size)
                     boss_group.add(self.boss)
+                if tile == 41:
+                    img = pygame.transform.scale(bla1,(tile_size, tile_size))
+                    img_rect = img.get_rect()
+                    img_rect.x = col_count * tile_size
+                    img_rect.y = row_count * tile_size
+                    tile =(img,img_rect,41)
+                    self.tile_list.append(tile)
+                if tile == 42:
+                    img = pygame.transform.scale(bla2,(tile_size, tile_size))
+                    img_rect = img.get_rect()
+                    img_rect.x = col_count * tile_size
+                    img_rect.y = row_count * tile_size
+                    tile =(img,img_rect,42)
+                    self.tile_list.append(tile)
+                if tile == 43:
+                    img = pygame.transform.scale(bla3,(tile_size, tile_size))
+                    img_rect = img.get_rect()
+                    img_rect.x = col_count * tile_size
+                    img_rect.y = row_count * tile_size
+                    tile =(img,img_rect,43)
+                    self.tile_list.append(tile)
+                if tile == 44:
+                    img = pygame.transform.scale(pethka,(tile_size, tile_size))
+                    img_rect = img.get_rect()
+                    img_rect.x = col_count * tile_size
+                    img_rect.y = row_count * tile_size
+                    tile =(img,img_rect,44)
+                    self.tile_list.append(tile)
+                if tile == 45:
+                    exit2 = Exit2(col_count*tile_size,row_count*tile_size-(tile_size//2))
+                    exit_Groub2.add(exit2)
+                if tile == 46:
+                    img = pygame.transform.scale(fbol,(tile_size, tile_size))
+                    img_rect = img.get_rect()
+                    img_rect.x = col_count * tile_size
+                    img_rect.y = row_count * tile_size
+                    tile =(img,img_rect,46)
+                    self.tile_list.append(tile)
+                if tile == 47:
+                    platforml = LavaPlatform(col_count*tile_size,row_count*tile_size,1,0)
+                    platform_Grup.add(platforml)
+                if tile == 48:
+                   enemy = Enemy_1(col_count * tile_size,row_count*tile_size+10)
+                   enemy_GROuB2.add(enemy)               
+                if tile == 49:
+                   enemy = Enemy_2(col_count * tile_size,row_count*tile_size+10)
+                   enemy_GROuB3.add(enemy)
+                if tile == 50:
+                   enemy = Enemy_3(col_count * tile_size,row_count*tile_size+10)
+                   enemy_GROuB4.add(enemy)                
+                if tile == 51:
+                    img = pygame.transform.scale(krisha,(tile_size, tile_size))
+                    img_rect = img.get_rect()
+                    img_rect.x = col_count * tile_size
+                    img_rect.y = row_count * tile_size
+                    tile =(img,img_rect,8)
+                    self.tile_list.append(tile)
+                if tile == 52:
+                    img = pygame.transform.scale(helikopter,(tile_size, tile_size))
+                    img_rect = img.get_rect()
+                    img_rect.x = col_count * tile_size
+                    img_rect.y = row_count * tile_size
+                    tile =(img,img_rect,8)
+                    self.tile_list.append(tile)
+
                 col_count +=1
             row_count+=1
     def draw(self):
@@ -311,7 +389,39 @@ class Atackkristalom_black:
             img = pygame.image.load(f"KTH{i}.png")
             img = pygame.transform.scale(img,(75,100))
             self.images.append(img)
-            
+        self.damage = 2
+        self.index =0 
+        self.image = self.images[self.index]
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+        self.active = True
+        self.animation_speed = 2
+        self.current_frame = 0
+        self.lifetime = 200
+    def update(self):    
+        if self.active:
+            self.current_frame +=1
+            if self.current_frame >= self.animation_speed:
+                self.current_frame = 0
+                self.index +=1
+                if self.index >= len(self.images):
+                    self.index = len(self.images) -1 
+                self.image = self.images[self.index]     
+    def draw(self,screen):
+        if self.active:
+            screen.blit(self.image,self.rect)
+
+
+
+class Supersnositheluronasonnyerixon993:
+    def __init__(self,x,y):
+        self.images= []
+        for i in range(1,23):
+            img = pygame.image.load(f"sa{i}.png")
+            #img = pygame.transform.scale(img,(75,100))
+            self.images.append(img)
+        self.damage = 3
         self.index =0 
         self.image = self.images[self.index]
         self.rect = self.image.get_rect()
@@ -346,6 +456,7 @@ class Atackkristalom_blackR:
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
+        self.damage = 2
         self.active = True
         self.animation_speed = 2
         self.current_frame = 0
@@ -362,36 +473,65 @@ class Atackkristalom_blackR:
     def draw(self,screen):
         if self.active:
             screen.blit(self.image,self.rect)
-# class Atackkristalom_yellow:
-#   def __init__(self,x,y):
-#        self.images= []
-#        for i in range(1,14):
-#           img = pygame.image.load(f"KY1{i}.png")
-#            img = pygame.transform.scale(img,(75,100))
-#            self.images.append(img)
-#            
-#        self.index =0 
-#        self.image = self.images[self.index]
-#        self.rect = self.image.get_rect()
-#        self.rect.x = x
-#        self.rect.y = y
-#        self.active = True
-#        self.animation_speed = 2
-#        self.current_frame = 0
-#        self.lifetime = 200
-#    def update(self):    
-#        if self.active:
-#            self.current_frame +=1
-#            if self.current_frame >= self.animation_speed:
-#                self.current_frame = 0
-#                self.index +=1
-#                if self.index >= len(self.images):
-#                    self.index = len(self.images) -1 
-#                self.image = self.images[self.index]     
-
+class Atackkristalom_y:
+    def __init__(self,x,y):
+        self.images= []
+        for i in range(1,12):
+            img = pygame.image.load(f"ky{i}.png")
+            self.images.append(img)    
+        self.index =0 
+        self.image = self.images[self.index]
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+        self.damage = 2
+        self.active = True
+        self.animation_speed = 2
+        self.current_frame = 0
+        self.lifetime = 200
+    def update(self):    
+        if self.active:
+            self.current_frame +=1
+            if self.current_frame >= self.animation_speed:
+                self.current_frame = 0
+                self.index +=1
+                if self.index >= len(self.images):
+                    self.index = len(self.images) -1 
+                self.image = self.images[self.index]  
     def draw(self,screen):
         if self.active:
             screen.blit(self.image,self.rect)
+class lutajaatakaviolrthjivoistreloi:
+    def __init__(self,x,y):
+        self.images= []
+        for i in range(1,38):
+            img = pygame.image.load(f"as{i}.png")
+            self.images.append(img)    
+        self.index =0 
+        self.image = self.images[self.index]
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+        self.damage = 2
+        self.active = True
+        self.animation_speed = 2
+        self.current_frame = 0
+        self.lifetime = 300
+    def update(self):    
+        if self.active:
+            self.current_frame +=1
+            if self.current_frame >= self.animation_speed:
+                self.current_frame = 0
+                self.index +=1
+                if self.index >= len(self.images):
+                    self.index = len(self.images) -1 
+                self.image = self.images[self.index]  
+    def draw(self,screen):
+        if self.active:
+            screen.blit(self.image,self.rect)
+
+
+            
 class Bosyra(pygame.sprite.Sprite):
     def __init__(self,x,y):
         pygame.sprite.Sprite.__init__(self)
@@ -399,10 +539,13 @@ class Bosyra(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y=y
-        self.helth = 10
+        self.helth = 80
         self.atackcd = 400
         self.cristals =[]
         self.attacikng = False
+        self.current_attack_type = 0
+        self.attack_switch_timer = 0
+        self.attack_switch_delay = 500
     def take_damage(self,damage):
         self.helth -= damage 
         if self.helth <= 0:
@@ -411,22 +554,67 @@ class Bosyra(pygame.sprite.Sprite):
         if self.atackcd <=0 and not self.attacikng:
             self.attacikng = True
             self.attack_duration = 300
-         
+            if self.current_attack_type == 0:
+                cristal5 = Atackkristalom_y(188,636)
+                cristal6 = Atackkristalom_y(388,636)
+                cristal7 = Atackkristalom_y(725,606)
+                cristal5.lifetime = 200   
+                cristal6.lifetime = 200   
+                cristal7.lifetime = 200   
+                self.cristals.append(cristal5)
+                self.cristals.append(cristal6)
+                self.cristals.append(cristal7)
+                self.current_attack_type = 1
+                self.attack_switch_timer = self.attack_switch_delay
+            elif self.current_attack_type == 1:
+                	
+                cristal = Atackkristalom_black(88,636)
+                cristal2 = Atackkristalom_blackR(563,600)
+                cristal3 = Atackkristalom_black(288,636)
+                cristal4 = Atackkristalom_black(488,636)
 
-            cristal = Atackkristalom_black(88,636)
-            cristal2 = Atackkristalom_blackR(563,600)
-            cristal3 = Atackkristalom_black(288,636)
-            cristal4 = Atackkristalom_black(488,636)
-            cristal.lifetime = 200
-            cristal2.lifetime = 200
-            self.cristals.append(cristal)
-            self.cristals.append(cristal2)
-            self.cristals.append(cristal3)
-            self.cristals.append(cristal4)
-
+                cristal.lifetime = 200   
+                cristal2.lifetime = 200
+                cristal3.lifetime = 200
+                cristal4.lifetime = 200
+                self.cristals.append(cristal)
+                self.cristals.append(cristal2)
+                self.cristals.append(cristal3)
+                self.cristals.append(cristal4)
+                
+                self.current_attack_type = 2
+                self.attack_switch_timer = self.attack_switch_delay
+            elif self.current_attack_type == 2:
+                cristal8 = Supersnositheluronasonnyerixon993(79 ,669)
+                cristal8.lifetime = 200
+                self.cristals.append(cristal8)
+                self.current_attack_type = 3
+                self.attack_switch_timer = self.attack_switch_delay                
+            else:
+                cristal9 = lutajaatakaviolrthjivoistreloi(200,275)
+                cristal10 = lutajaatakaviolrthjivoistreloi(565,330)
+                cristal11 = lutajaatakaviolrthjivoistreloi(370,125)
+                cristal12 = lutajaatakaviolrthjivoistreloi(620,330)
+                self.cristals.append(cristal9)
+                self.cristals.append(cristal10)
+                self.cristals.append(cristal11)
+                self.cristals.append(cristal12)
+                cristal9.lifetime = 200
+                cristal10.lifetime = 200
+                cristal11.lifetime = 200 
+                self.current_attack_type = 0
+                self.attack_switch_timer = self.attack_switch_delay
+            
+            
+            
             self.atackcd = 400
     def update(self):
         self.atackcd-=1
+
+        if self.attack_switch_timer > 0 :
+            self.attack_switch_timer -=1
+
+
         if self.attacikng:
             self.attack_duration -=1
             if self.attack_duration <= 0:
@@ -445,11 +633,12 @@ class Bosyra(pygame.sprite.Sprite):
 class Player():
     def __init__(self,x,y):
         self.reset(x,y)
+
+    def reset(self,x,y) :
         self.invisible= False
         self.invisibletomer = 0
         self.attaking = False
         self.cdattaking = 0
-    def reset(self,x,y) :
         self.images_right = []
         self.images_left = []
         self.Atack_Right = []
@@ -464,7 +653,7 @@ class Player():
             img_left = pygame.transform.flip(img_right, True, False)
             self.images_right.append(img_right)
             self.images_left.append(img_left)
-        for i in range(1,5):
+        for i in range(1,6):
             Atack_Right = pygame.image.load(f"PLAYERFINALLVL{i}.png")
             Atack_Right = pygame.transform.scale(Atack_Right,(40,44))
             Atack_left = pygame.transform.flip(Atack_Right,True,False)
@@ -490,6 +679,7 @@ class Player():
         dx = 0
         dy = 0
         wolk_kd = 10
+        global has_final_sword
         global world 
         global level
         global lives 
@@ -533,18 +723,47 @@ class Player():
                     self.atack_index = 0
                 else:
                     attack_rect = pygame.Rect(
-                    self.rect.x + (self.direction * tile_size),
-                    self.rect.y,
-                    tile_size+1,
-                    tile_size+1   
+                        self.rect.x + (self.direction * tile_size),
+                        self.rect.y,
+                        tile_size+5,
+                        tile_size+12   
                     )
                     pygame.draw.rect(screen,(255,0,0),attack_rect,2)
+
                     for enemy in enemy_GROuB:
                         if attack_rect.colliderect(enemy.rect):
-                            enemy.take_damage(1)
+                            if has_final_sword:
+                                enemy.take_damage(1)
+                            else:
+                                enemy.take_damage(0.5)
+                                
+                    for enemy in enemy_GROuB2:
+                        if attack_rect.colliderect(enemy.rect):
+                            if has_final_sword:
+                                enemy.take_damage(1)
+                            else:
+                                enemy.take_damage(0.5)
+                                
+                    for enemy in enemy_GROuB3:
+                        if attack_rect.colliderect(enemy.rect):
+                            if has_final_sword:
+                                enemy.take_damage(1)
+                            else:
+                                enemy.take_damage(0.5)
+                                
+                    for enemy in enemy_GROuB4:
+                        if attack_rect.colliderect(enemy.rect):
+                            if has_final_sword:
+                                enemy.take_damage(1)
+                            else:
+                                enemy.take_damage(0.5)
+                                
                     for enemy in boss_group:
                         if attack_rect.colliderect(enemy.rect):
-                            enemy.take_damage(1)
+                            if has_final_sword:
+                                enemy.take_damage(1)
+                            else:
+                                enemy.take_damage(0.5)
                     
             if self.cdattaking > 0:
                 self.cdattaking -=1
@@ -580,6 +799,13 @@ class Player():
             self.in_air = True
             for tile in world.tile_list:
                 tile_img,tile_rect,tile_type = tile
+                if tile_type == 44 and len(coleckted_swords) >= 7 and not has_final_sword:
+                    coleckted_swords.clear()
+                    final_swordd = Sword(0,0,7)
+                    coleckted_swords.append(final_swordd)
+                    has_final_sword = True
+            for tile in world.tile_list:
+                tile_img,tile_rect,tile_type = tile
                 if tile_type in [37,38]:
                     continue
                     
@@ -598,20 +824,31 @@ class Player():
                 coleckted_swords.append(sword)
             
             
-            if pygame.sprite.spritecollide(self,enemy_GROuB,False )and not self.invisible:
+            if (pygame.sprite.spritecollide(self, enemy_GROuB , False) or 
+                pygame.sprite.spritecollide(self, enemy_GROuB2, False) or 
+                pygame.sprite.spritecollide(self, enemy_GROuB3, False) or 
+                pygame.sprite.spritecollide(self, enemy_GROuB4, False)) and not self.invisible:
                 lives -=1 
                 self.invisible = True
                 self.invisibletomer = 20
-                if lives == 0:
+                if lives <= 0:
                     GAme_oVer = -1
                     GAme_oVer_fx.play()
             if pygame.sprite.spritecollide(self,BALAnda_GROuB,False)and not self.invisible:
                 lives -=1 
                 self.invisible = True
                 self.invisibletomer = 20
-                if lives == 0:
+                if lives <= 0:
                     GAme_oVer = -1
                     GAme_oVer_fx.play()
+
+            for exit in exit_Groub2:
+                if self.rect.colliderect(exit.rect):
+                    level = 6
+                    world_data = []
+                    world = reset_level(level)
+                    GAme_oVer = 0
+                    break
             for exit in exit_Groub:
                 if self.rect.colliderect(exit.rect):
                     if exit.rect.x < screen_width //2:
@@ -663,6 +900,15 @@ class Exit(pygame.sprite.Sprite):
         self.rect.x = x
         self.rect.y = y        
 
+class Exit2(pygame.sprite.Sprite):
+    def __init__(self,x,y):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.Surface((tile_size,int(tile_size*1.5)),pygame.SRCALPHA)#
+        self.image.fill((0,0,0,0))
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y   
+             
 class Enemy(pygame.sprite.Sprite):
     def __init__(self,x,y):
         pygame.sprite.Sprite.__init__(self)
@@ -672,18 +918,79 @@ class Enemy(pygame.sprite.Sprite):
         self.rect.y = y
         self.move_direction = 1
         self.move_counter = 0
-        self.health = 1
+        self.health = 2
     def take_damage(self,damage):
         self.health -= damage 
         if self.health <= 0:
             self.kill()
-
     def update(self):
         self.rect.x += self.move_direction
         self.move_counter += 1
         if abs(self.move_counter) > 50:
             self.move_direction *= -1
             self.move_counter *= -1
+class Enemy_1(pygame.sprite.Sprite):
+    def __init__(self,x,y):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.image.load("slizenpustini.png")    
+        self.rect = self.image.get_rect()    
+        self.rect.x = x
+        self.rect.y = y
+        self.move_direction = 1
+        self.move_counter = 0
+        self.health = 2
+    def take_damage(self,damage):
+        self.health -= damage 
+        if self.health <= 0:
+            self.kill()
+    def update(self):
+        self.rect.x += self.move_direction
+        self.move_counter += 1
+        if abs(self.move_counter) > 50:
+            self.move_direction *= -1
+            self.move_counter *= -1
+class Enemy_2(pygame.sprite.Sprite):
+    def __init__(self,x,y):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.image.load("ads.png")    
+        self.rect = self.image.get_rect()    
+        self.rect.x = x
+        self.rect.y = y
+        self.move_direction = 1
+        self.move_counter = 0
+        self.health = 2
+    def take_damage(self,damage):
+        self.health -= damage 
+        if self.health <= 0:
+            self.kill()
+    def update(self):
+        self.rect.x += self.move_direction
+        self.move_counter += 1
+        if abs(self.move_counter) > 50:
+            self.move_direction *= -1
+            self.move_counter *= -1
+
+class Enemy_3(pygame.sprite.Sprite):
+    def __init__(self,x,y):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.image.load("portha.png")    
+        self.rect = self.image.get_rect()    
+        self.rect.x = x
+        self.rect.y = y
+        self.move_direction = 1
+        self.move_counter = 0
+        self.health = 2
+    def take_damage(self,damage):
+        self.health -= damage 
+        if self.health <= 0:
+            self.kill()
+    def update(self):
+        self.rect.x += self.move_direction
+        self.move_counter += 1
+        if abs(self.move_counter) > 50:
+            self.move_direction *= -1
+            self.move_counter *= -1
+            
 class LAVAnda(pygame.sprite.Sprite):
     def __init__(self, x,y):
         pygame.sprite.Sprite.__init__(self)
@@ -706,11 +1013,15 @@ def reset_level(level):
         pygame.mixer.music.set_volume(0.2)
     player.reset(100,screen_height-130)        
     enemy_GROuB.empty()
+    enemy_GROuB2.empty()
+    enemy_GROuB3.empty()
+    enemy_GROuB4.empty()
     BALAnda_GROuB.empty()
     exit_Groub.empty()
     platform_Grup.empty()
-    sword_Group.empty()
     boss_group.empty()
+
+    sword_Group.empty()
     if path.exists(f"level{level}_data"):
         pickle_in = open(f"level{level}_data","rb")
         world_data = pickle.load(pickle_in)
@@ -769,14 +1080,39 @@ class Platform(pygame.sprite.Sprite):
         self.move_counter +=1
         if abs(self.move_counter)> 50:
             self.move_direction *= -1
-            self.move_counter *= -1                
+            self.move_counter *= -1     
+class LavaPlatform(pygame.sprite.Sprite):
+    def __init__(self,x,y, move_x , move_y ):
+        pygame.sprite.Sprite.__init__(self)
+        img = pygame.image.load("pixil-frame-0 (58).png")
+        self.image = pygame.transform.scale(img,(tile_size,tile_size // 2 ))
+        self.rect= self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+        self.move_counter= 0
+        self.move_direction  = 1 
+        self.move_x = move_x
+        self.move_y = move_y
+
+
+        
+    def update(self):
+        self.rect.x += self.move_direction * self.move_x
+        self.rect.y += self.move_direction * self.move_y
+        self.move_counter +=1
+        if abs(self.move_counter)> 50:
+            self.move_direction *= -1
+            self.move_counter *= -1              
 class Sword(pygame.sprite.Sprite):           
     def __init__(self,x,y,sword_number):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load(f"sword{sword_number}.webp")
+        if sword_number == 7:
+            self.image = pygame.image.load("vaukrutimeth.png")
+        else:
+            self.image = pygame.image.load(f"sword{sword_number}.webp")
         self.image = pygame.transform.scale(self.image,(tile_size,tile_size))
         self.rect = self.image.get_rect()
-        self.rect.center = (x,y)
+        self.rect.center = (x,y) 
         self.sword_number = sword_number     
 
             
@@ -801,18 +1137,18 @@ lvl_musuk = {
     1:"Mlvl1.mp3",
     2:"Mlvl2.mp3",
     3:"Mlvl3.mp3",
-    3:"Mlvl3.mp3",
-    3:"Mlvl3.mp3",
-    3:"Mlvl3.mp3",
-    3:"MlvlF.mp3"
+    4:"Mlvl3.mp3",
+    5:"Mlvl3.mp3",
+    6:"tac.mp3",
+    7:"MlvlF.mp3"
 }           
            
 bglvl1 = pygame.image.load("OIP (4).png")
 bglvl2 = pygame.image.load("bglvl2.png")
 bglvl3 = pygame.image.load("lvlkakoito.png")
-bglvl4 = pygame.image.load("OIP (4).png")
-bglvl5 = pygame.image.load("OIP (4).png")
-bglvl6 = pygame.image.load("OIP (4).png")
+bglvl4 = pygame.image.load("3f.png")
+bglvl5 = pygame.image.load("4f.png")
+bglvl6 = pygame.image.load("bgi6.png")
 bglvl7= pygame.image.load("pixil-frame-0 (47).png")
 bgimages = {
     1:pygame.transform.scale(bglvl1,(screen_width,screen_height)),
@@ -826,20 +1162,27 @@ bgimages = {
 
 def draw_lives():
     for i in range(lives):
-        screen.blit(hart_full_image,(700+i*(tile_size//2+5),25))
+        screen.blit(hart_full_image,(600+i*(tile_size//2+5),25))
 def draw_swords():
-    for i,swords in enumerate(coleckted_swords):
-        x = (10+i*(tile_size+5))
-        y = 10 
-        screen.blit(swords.image,(x,y))
+    if has_final_sword :
+        screen.blit(final_sword,(10,10))
+    else:
+        for i,swords in enumerate(coleckted_swords):
+            x = (10+i*(tile_size+5))
+            y = 10 
+            screen.blit(swords.image,(x,y))
 
 
 
 level = 7
 max_level = 10
 enemy_GROuB = pygame.sprite.Group()
+enemy_GROuB2 = pygame.sprite.Group()
+enemy_GROuB3 = pygame.sprite.Group()
+enemy_GROuB4 = pygame.sprite.Group()
 BALAnda_GROuB = pygame.sprite.Group()
 exit_Groub = pygame.sprite.Group()
+exit_Groub2 = pygame.sprite.Group()
 platform_Grup = pygame.sprite.Group()
 sword_Group = pygame.sprite.Group()
 boss_group = pygame.sprite.Group()
@@ -865,11 +1208,18 @@ while run:
             run = False
         if start_button.draw():
             main_menu= False 
+            if level in lvl_musuk:
+                pygame.mixer.music.load(lvl_musuk[level])
+                pygame.mixer.music.play(-1)
+                pygame.mixer.music.set_volume(0.2)
     else :
         world.draw()
         if GAme_oVer == 0:
             
             enemy_GROuB.update()
+            enemy_GROuB2.update()
+            enemy_GROuB3.update()
+            enemy_GROuB4.update()
             platform_Grup.update()
             sword_Group.update()
             boss_group.update()
@@ -881,25 +1231,30 @@ while run:
                         lives-=1
                         player.invisible = True
                         player.invisibletomer = 20
-                        if lives == 0:
+                        if lives <= 0:
                             GAme_oVer = -1
                             GAme_oVer_fx.play()
-                    for crystal in boss.cristals:
-                        if player.rect.colliderect(crystal.rect):
-                            if not player.invisible:
-                                lives-=1
-                                player.invisible = True
-                                player.invisibletomer = 20
-                                if lives == 0:
-                                    GAme_oVer = -1
-                                    GAme_oVer_fx.play() 
-                                crystal.active = False          
+            for crystal in boss.cristals:
+                if crystal.active and player.rect.colliderect(crystal.rect):
+                    if not player.invisible:
+                        lives-=crystal.damage
+                        player.invisible = True
+                        player.invisibletomer = 20
+                        if lives <= 0:
+                            GAme_oVer = -1
+                            GAme_oVer_fx.play() 
+                         
         if world.boss is not None:
             boss_group.draw(screen)
 
         enemy_GROuB.draw(screen )
+        enemy_GROuB2.draw(screen )
+        enemy_GROuB3.draw(screen )
+        enemy_GROuB4.draw(screen )
         BALAnda_GROuB.draw(screen)
         exit_Groub.draw(screen)
+        exit_Groub2.draw(screen)
+     
         platform_Grup.draw(screen)
         sword_Group.draw(screen)
         draw_swords()
@@ -933,6 +1288,7 @@ while run:
                 if restart_button.draw():
                     level=1
                     world_data = []
+                    coleckted_swords = []
                     world =reset_level(level)
                     GAme_oVer = 0
     for event in pygame.event.get():
