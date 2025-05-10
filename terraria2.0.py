@@ -65,7 +65,7 @@ final_sword = pygame.transform.scale(pygame.image.load("vaukrutimeth.png"),(50,5
 has_final_sword = False
 lavvovajaplatvormaimenjidjonisilverhanda = pygame.image.load("pixil-frame-0 (58).png")
 coleckted_swords = []
-lives = 10
+lives = 15
 current_musick = None
 
 def draw_grid():
